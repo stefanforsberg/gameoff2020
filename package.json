@@ -1,0 +1,15 @@
+{
+  "name": "gameoff2020",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel index.html -p 8080",
+    "build": "parcel build index.html --public-url ./ --out-dir prod"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "phaser": "^3.24.1"
+  }
+}
