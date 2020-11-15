@@ -3,6 +3,7 @@ import ImgPaintHolderBlack from "../img/paintHolderBlack.png";
 import ImgPaintHolder from "../img/paintHolder.png";
 import ImgPaintYellow from "../img/paintYellow.png";
 import ImgPaintBlue from "../img/paintBlue.png";
+import ImgPaintRed from "../img/paintRed.png";
 
 export default class MenuScene extends Phaser.Scene {
   constructor() {
@@ -16,6 +17,7 @@ export default class MenuScene extends Phaser.Scene {
     this.load.image("paintHolder", ImgPaintHolder);
     this.load.image("paintYellow", ImgPaintYellow);
     this.load.image("paintBlue", ImgPaintBlue);
+    this.load.image("paintRed", ImgPaintRed);
   }
 
   create() {
@@ -29,12 +31,20 @@ export default class MenuScene extends Phaser.Scene {
       this.input.setDefaultCursor("url(" + ImgPaintYellow + ") 32 32, pointer");
     });
 
-    this.paintBlue = this.add.image(483, 526, "paintBlue");
+    this.paintBlue = this.add.image(480, 526, "paintBlue");
     this.paintBlue.alpha = 0;
     this.paintBlue.setInteractive();
 
     this.paintBlue.on("pointerdown", () => {
       this.input.setDefaultCursor("url(" + ImgPaintBlue + ") 32 32, pointer");
+    });
+
+    this.paintRed = this.add.image(532, 525, "paintRed");
+    this.paintRed.alpha = 0;
+    this.paintRed.setInteractive();
+
+    this.paintRed.on("pointerdown", () => {
+      this.input.setDefaultCursor("url(" + ImgPaintRed + ") 32 32, pointer");
     });
 
     
@@ -53,6 +63,15 @@ export default class MenuScene extends Phaser.Scene {
   addBlue() {
     this.tweens.add({
       targets: [this.paintBlue],
+      alpha: { value: 1, duration: 1000 },
+      yoyo: false,
+      loop: 0,
+    });
+  }
+
+  addRed() {
+    this.tweens.add({
+      targets: [this.paintRed],
       alpha: { value: 1, duration: 1000 },
       yoyo: false,
       loop: 0,

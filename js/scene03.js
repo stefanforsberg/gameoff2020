@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import ImgScene03 from "../img/s03.png";
 import ImgChild from "../img/s03_child.png";
 import ImgHeart from "../img/heart.png"
 import interaction from "../js/interaction.js"
@@ -13,6 +14,7 @@ export default class Scene03 extends Phaser.Scene {
   preload() {
     this.load.image("child", ImgChild);
     this.load.image("heart", ImgHeart);
+    this.load.image("scene03", ImgScene03);
   }
 
   create(params) {
@@ -21,9 +23,26 @@ export default class Scene03 extends Phaser.Scene {
 
     this.luna = params.luna;
 
-    this.backgroundBright = this.add.graphics();
-    this.backgroundBright.fillStyle(0xF5F4F0);
-    this.backgroundBright.fillRect(0, 0, 1024, 600);
+    this.add.image(512,300, "scene03")
+
+    this.input.topOnly = false;
+
+    interaction.exitRight(this, params.luna, 900, 300, params.exitRight)
+
+    interaction.exitUp(this, params.luna, 512, 30, params.exitUp)
+
+    this.walkable = interaction.getPolygon(this, [48,283,473,279,493,16,584,17,606,264,967,307,960,430,34,423])
+    this.walkable.on(
+      "pointerdown",
+      function (pointer, x) {
+        if (this.input.manager.defaultCursor === "") {
+          params.luna.setTarget(pointer.worldX, pointer.worldY);
+        }
+      },
+      this
+    );
+
+    
 
     this.child = this.physics.add.image(512, 300, "child");
 
@@ -31,13 +50,13 @@ export default class Scene03 extends Phaser.Scene {
       overlap.destroy();
       this.scene.launch("HeartScene", {x: this.child.x, y: this.child.y})
       this.scene.bringToTop("HeartScene");
-      params.mainScene.scene.pause();
-
-      
+      params.parent.scene.pause();
 
       this.time.addEvent({
         delay: 2000,
         callback: () => {
+          this.scene.stop("HeartScene")
+
           this.tweens.add({
             targets: [this.child ],
             alpha: { value: 0, duration: 2000 },
@@ -47,9 +66,9 @@ export default class Scene03 extends Phaser.Scene {
             yoyo: false,
             loop: 0,
             onComplete: () => {
-              this.scene.stop("HeartScene")
+              
               this.scene.manager.getScene("MenuScene").addBlue();
-              params.mainScene.scene.resume();
+              params.parent.scene.resume();
             }
           });
         },
@@ -60,10 +79,7 @@ export default class Scene03 extends Phaser.Scene {
      
     });
     
-    interaction.exitRight(this, params.luna, 900, 300, params.exitRight)
-
-    interaction.exitUp(this, params.luna, 512, 70, params.exitUp)
-
+    
 
     this.scene.pause();
   }

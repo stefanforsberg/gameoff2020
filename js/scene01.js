@@ -28,9 +28,19 @@ export default class Scene01 extends Phaser.Scene {
     console.log("scene 1");
 
     this.params = params;
-    
+
+    this.input.on(
+      "pointerdown",
+      function (pointer, x) {
+        if (this.input.manager.defaultCursor === "") {
+          this.params.luna.setTarget(pointer.worldX, pointer.worldY);
+        }
+      },
+      this
+    );
+
     this.backgroundDark = this.add.graphics();
-    this.backgroundDark.fillStyle(0x0D0909);
+    this.backgroundDark.fillStyle(0x0d0909);
     this.backgroundDark.fillRect(0, 0, 1024, 600);
 
     this.spritestandup = this.add.sprite(200, 290, "lunastandup", 0).setSize(270, 240);
@@ -42,37 +52,8 @@ export default class Scene01 extends Phaser.Scene {
 
     this.sun.setInteractive();
 
-    interaction.click(this, this.sun, "Yellow", true, () => {
-      this.params.parent.sounds.scribble.play();
-
-      document.getElementsByTagName("body")[0].style.animation = "colorFade 1s normal forwards";
-      
-      this.tweens.add({
-        targets: [this.backgroundBright, this.params.luna.container],
-        alpha: { value: 1, duration: 1000 },
-        yoyo: false,
-        loop: 0,
-        onComplete: () => {
-          this.params.lightCb();
-          interaction.exitRight(this, this.params.luna, 900, 300, this.params.exitRight)
-        }
-      });
-
-      // this.cameras.main.fade(100,245,244,240, () => {
-      //   this.navigateRight = this.add.image(400,300, "navigateRight");
-      //   this.navigateRight.setInteractive();
-      //   this.navigateRight.on("pointerdown", () => {
-          
-      //     this.params.exitRight();
-      //   });
-      // });
-      
-
-      
-    });
-
     this.backgroundBright = this.add.graphics();
-    this.backgroundBright.fillStyle(0xF5F4F0);
+    this.backgroundBright.fillStyle(0xf5f4f0);
     this.backgroundBright.fillRect(0, 0, 1024, 600);
     this.backgroundBright.alpha = 0;
 
@@ -102,14 +83,19 @@ export default class Scene01 extends Phaser.Scene {
         callback: () => {
           this.spritestandup.anims.play("luna-stand-up");
 
-          this.spritestandup.once('animationcomplete', () => {
+          this.spritestandup.once("animationcomplete", () => {
+
+            document.getElementsByTagName("body")[0].style.animation = "colorFade 1s normal forwards";
+
             this.tweens.add({
-              targets: [this.sun],
+              targets: [this.backgroundBright, this.params.luna.container],
               alpha: { value: 1, duration: 1000 },
-              scale: { value: 1, duration: 1000 },
-              rotation: { value: 1, duration: 1000 },
               yoyo: false,
               loop: 0,
+              onComplete: () => {
+                this.params.lightCb();
+                interaction.exitRight(this, this.params.luna, 900, 300, this.params.exitRight);
+              },
             });
           });
         },
@@ -117,30 +103,6 @@ export default class Scene01 extends Phaser.Scene {
         loop: false,
       });
     });
-
-    
-
-    
-    //this.scene.pause();
-
-    // console.log("asd")
-
-    // const bridge = this.add.image(500, 300, "bridge");
-    // bridge.alpha = 0.5
-
-    // interaction.polygon(this, [145, 192, 284, 253, 283, 313.5, 68, 412, 84, 283], CursorWalk.replace("/",""), (p) => {
-    //     console.log("hej")
-    //     this.luna.setTarget(p.worldX, p.worldY)
-    // });
-
-    // interaction.polygon(this, [298, 254, 743,263, 722,347, 292,335], CursorNo.replace("/",""), (p, graphics) => {
-    //     if(graphics.input.cursor.indexOf("cursorWalk") > -1) {
-    //         this.luna.setTarget(p.worldX, p.worldY)
-    //     } else {
-    //         graphics.input.cursor = "url(" + CursorWalk.replace("/","") + ") 32 32, pointer";
-    //         graphics.input
-    //     }
-    // });
   }
 
   update() {}

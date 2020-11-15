@@ -5,6 +5,8 @@ import HeartScene from "../js/heartScene.js"
 import Scene01 from "../js/scene01.js"
 import Scene02 from "../js/scene02.js"
 import Scene03 from "../js/scene03.js"
+import Scene04 from "../js/scene04.js"
+import Scene05 from "../js/scene05.js"
 const config = {
     type: Phaser.AUTO,
     scale: {
@@ -14,7 +16,7 @@ const config = {
         height: 600
     },
     parent: "game",
-    scene: [MainScene, Scene01, Scene02, Scene03, MenuScene, HeartScene],
+    scene: [MainScene, Scene01, Scene02, Scene03, Scene04, Scene05, MenuScene, HeartScene],
     physics: {
         default: "arcade",
         arcade: {

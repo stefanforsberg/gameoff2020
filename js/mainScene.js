@@ -61,7 +61,7 @@ export default class MainScene extends Phaser.Scene {
       mainTheme: this.sound.add("mainTheme", { loop: true, volume: 1 }),
     };    
 
-    // this.sounds.mainTheme.play();
+    this.sounds.mainTheme.play();
 
     this.luna = new Luna(this);
 
@@ -79,13 +79,37 @@ export default class MainScene extends Phaser.Scene {
     });
 
     this.scene.launch("Scene03", {
-      mainScene: this,
+      parent: this,
       luna: this.luna,
       exitRight: () => {
         this.luna.setPos(240, 320);
 
         this.sceneOrder("Scene02", "Scene03");
       },
+      exitUp: () => {
+        this.luna.setPos(170, 294);
+        this.sceneOrder("Scene04", "Scene03");
+      }
+    });
+
+    this.scene.launch("Scene04", {
+      parent: this,
+      luna: this.luna,
+
+      exitLeft: () => {
+        this.luna.setPos(489, 219);
+        this.sceneOrder("Scene03", "Scene04");
+      }
+    });
+
+    this.scene.launch("Scene05", {
+      parent: this,
+      luna: this.luna,
+
+      exitLeft: () => {
+        this.luna.setPos(489, 219);
+        this.sceneOrder("Scene03", "Scene04");
+      }
     });
 
     this.scene.launch("Scene01", {
@@ -93,7 +117,7 @@ export default class MainScene extends Phaser.Scene {
       luna: this.luna,
       exitRight: () => {
         this.luna.setPos(240, 320);
-        this.sceneOrder("Scene03", "Scene01");
+        this.sceneOrder("Scene05", "Scene01");
       },
       lightCb: () => {
         this.scene.manager.getScene("MenuScene").showMenu();
@@ -105,12 +129,7 @@ export default class MainScene extends Phaser.Scene {
     this.input.on(
       "pointerdown",
       function (pointer, x) {
-        console.log(x);
-
-        if (this.input.manager.defaultCursor === "") {
-          this.luna.setTarget(pointer.worldX, pointer.worldY);
           console.log(pointer.worldX + "," + pointer.worldY);
-        }
       },
       this
     );

@@ -61,6 +61,12 @@ export default class Luna {
 
   update() {
 
+    if(this.sprite.y < 300) {
+      this.sprite.scale = 0.5 - 0.5*((300-this.sprite.y)/300);
+    } else {
+      this.sprite.scale = 0.5;
+    }
+
     if (this.sprite.body.velocity.y === 0 && this.sprite.body.velocity.x === 0) {
       this.sprite.setTexture("lunasheet", 0);
     } else {
@@ -69,8 +75,6 @@ export default class Luna {
       } else {
         this.sprite.setFlipX(false);
       }
-
-    //   console.log(Phaser.Math.Distance.Between(this.sprite.x, this.sprite.y, this.targetPos.x, this.targetPos.y))
 
       if(Phaser.Math.Distance.Between(this.sprite.x, this.sprite.y, this.targetPos.x, this.targetPos.y) < 5) {
         this.sprite.body.reset(this.targetPos.x, this.targetPos.y);

@@ -16,14 +16,14 @@ export default class HeartScene extends Phaser.Scene {
     console.log("lauching heart")
 
     this.add.particles("heart").createEmitter({
-      scale: { start: 0, end: 0.7 },
+      scale: { start: 0, end: 0.9 },
       alpha: { start: 1, end: 0 },
       speed: 50,
       x: params.x,
       y: params.y,
       blendMode: "NORMAL",
       lifespan: 2000,
-      frequency: 400,
+      frequency: 200,
     });
 
     
