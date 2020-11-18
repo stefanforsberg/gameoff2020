@@ -12,9 +12,9 @@ export default class Scene03 extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("child", ImgChild);
-    this.load.image("heart", ImgHeart);
     this.load.image("scene03", ImgScene03);
+
+
   }
 
   create(params) {
@@ -29,57 +29,18 @@ export default class Scene03 extends Phaser.Scene {
 
     interaction.exitRight(this, params.luna, 900, 300, params.exitRight)
 
-    interaction.exitUp(this, params.luna, 512, 30, params.exitUp)
+    interaction.exitUp(this, params.luna, 525, 100, params.exitUp)
 
     this.walkable = interaction.getPolygon(this, [48,283,473,279,493,16,584,17,606,264,967,307,960,430,34,423])
     this.walkable.on(
       "pointerdown",
-      function (pointer, x) {
+      function (pointer) {
         if (this.input.manager.defaultCursor === "") {
           params.luna.setTarget(pointer.worldX, pointer.worldY);
         }
       },
       this
     );
-
-    
-
-    this.child = this.physics.add.image(512, 300, "child");
-
-    const overlap = this.physics.add.overlap(this.child, this.luna.sprite, () => {
-      overlap.destroy();
-      this.scene.launch("HeartScene", {x: this.child.x, y: this.child.y})
-      this.scene.bringToTop("HeartScene");
-      params.parent.scene.pause();
-
-      this.time.addEvent({
-        delay: 2000,
-        callback: () => {
-          this.scene.stop("HeartScene")
-
-          this.tweens.add({
-            targets: [this.child ],
-            alpha: { value: 0, duration: 2000 },
-            scale: { value: 0.5, duration: 2000 },
-            x: {value: 476, duration: 2000},
-            y: {value: 528, duration: 2000},
-            yoyo: false,
-            loop: 0,
-            onComplete: () => {
-              
-              this.scene.manager.getScene("MenuScene").addBlue();
-              params.parent.scene.resume();
-            }
-          });
-        },
-        callbackScope: this,
-        loop: false
-      });
-
-     
-    });
-    
-    
 
     this.scene.pause();
   }

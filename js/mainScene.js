@@ -74,7 +74,7 @@ export default class MainScene extends Phaser.Scene {
       exitLeft: () => {
         this.luna.setPos(728, 320);
 
-        this.sceneOrder("Scene03", "Scene02");
+        this.sceneOrder("Scene06", "Scene02");
       },
     });
 
@@ -84,7 +84,7 @@ export default class MainScene extends Phaser.Scene {
       exitRight: () => {
         this.luna.setPos(240, 320);
 
-        this.sceneOrder("Scene02", "Scene03");
+        this.sceneOrder("Scene06", "Scene03");
       },
       exitUp: () => {
         this.luna.setPos(170, 294);
@@ -112,12 +112,26 @@ export default class MainScene extends Phaser.Scene {
       }
     });
 
+    this.scene.launch("Scene06", {
+      parent: this,
+      luna: this.luna,
+
+      exitLeft: () => {
+        this.luna.setPos(748, 332);
+        this.sceneOrder("Scene03", "Scene06");
+      },
+      exitRight: () => {
+        this.luna.setPos(176, 322);
+        this.sceneOrder("Scene05", "Scene06");
+      }
+    });
+
     this.scene.launch("Scene01", {
       parent: this,
       luna: this.luna,
       exitRight: () => {
         this.luna.setPos(240, 320);
-        this.sceneOrder("Scene05", "Scene01");
+        this.sceneOrder("Scene03", "Scene01");
       },
       lightCb: () => {
         this.scene.manager.getScene("MenuScene").showMenu();

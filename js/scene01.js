@@ -1,7 +1,6 @@
 import Phaser from "phaser";
 import CursorWalk from "../img/cursorWalk.png";
 import CursorNo from "../img/cursorNo.png";
-import ImgSun from "../img/s01_sun.png";
 import interaction from "../js/interaction.js";
 
 import ImgLunaStandUpSheet from "../img/lunastandup.png";
@@ -14,8 +13,6 @@ export default class Scene01 extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("sun", ImgSun);
-
     this.load.spritesheet("lunastandup", "./" + ImgLunaStandUpSheet, {
       frameWidth: 270,
       frameHeight: 240,
@@ -29,6 +26,18 @@ export default class Scene01 extends Phaser.Scene {
 
     this.params = params;
 
+    this.backgroundDark = this.add.graphics();
+    this.backgroundDark.fillStyle(0x0d0909);
+    this.backgroundDark.fillRect(0, 0, 1024, 600);
+
+    interaction.writeText("Mysterious voice: The world has lost its color. Luna, the daughter of the moon, can help restore color to the world but first she needs your help restoring her own color.}}I managed to save her yellow essence, click it and then click on her.", true, () => {
+      this.start();
+    })
+
+    
+  }
+
+  start() {
     this.input.on(
       "pointerdown",
       function (pointer, x) {
@@ -39,18 +48,11 @@ export default class Scene01 extends Phaser.Scene {
       this
     );
 
-    this.backgroundDark = this.add.graphics();
-    this.backgroundDark.fillStyle(0x0d0909);
-    this.backgroundDark.fillRect(0, 0, 1024, 600);
+
 
     this.spritestandup = this.add.sprite(200, 290, "lunastandup", 0).setSize(270, 240);
 
     this.spritestandup.scale = 0.63;
-
-    this.sun = this.add.image(800, 150, "sun");
-    this.sun.alpha = 0;
-
-    this.sun.setInteractive();
 
     this.backgroundBright = this.add.graphics();
     this.backgroundBright.fillStyle(0xf5f4f0);

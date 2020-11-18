@@ -28,6 +28,7 @@ export default class MenuScene extends Phaser.Scene {
     this.paintYellow.setInteractive();
     
     this.paintYellow.on("pointerdown", () => {
+      console.log("yelll")
       this.input.setDefaultCursor("url(" + ImgPaintYellow + ") 32 32, pointer");
     });
 
