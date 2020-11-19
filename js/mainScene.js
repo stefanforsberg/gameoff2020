@@ -131,7 +131,7 @@ export default class MainScene extends Phaser.Scene {
       luna: this.luna,
       exitRight: () => {
         this.luna.setPos(240, 320);
-        this.sceneOrder("Scene03", "Scene01");
+        this.sceneOrder("Scene05", "Scene01");
       },
       lightCb: () => {
         this.scene.manager.getScene("MenuScene").showMenu();

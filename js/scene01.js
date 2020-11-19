@@ -30,10 +30,11 @@ export default class Scene01 extends Phaser.Scene {
     this.backgroundDark.fillStyle(0x0d0909);
     this.backgroundDark.fillRect(0, 0, 1024, 600);
 
-    interaction.writeText("Mysterious voice: The world has lost its color. Luna, the daughter of the moon, can help restore color to the world but first she needs your help restoring her own color.}}I managed to save her yellow essence, click it and then click on her.", true, () => {
-      this.start();
-    })
+    // interaction.writeText("Mysterious voice: The world has lost its color. Luna, the daughter of the moon, can help restore color to the world but first she needs your help restoring her own color.}}I managed to save her yellow essence, click it and then click on her.", true, () => {
+    //   this.start();
+    // })
 
+    this.start();
     
   }
 
