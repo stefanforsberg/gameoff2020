@@ -86,6 +86,10 @@ const exit = function(scene, luna, x, y, imgName, cb) {
 
 const writeText = function(text, hide, cb) {
     
+    if(textElement.style.display === 'flex') {
+        return;
+    }
+
     const textSpeed = 30;
     let i = 0;
 

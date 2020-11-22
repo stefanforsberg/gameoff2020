@@ -7,7 +7,8 @@ export default class Luna {
 
     console.log(this.sprite.displayHeight )
 
-    this.sprite.scale = 0.5;
+    this.baseMaxScale = 0.5;
+    this.sprite.scale = this.baseMaxScale;
 
     
     this.container = this.scene.add.container(0, 0)
@@ -44,6 +45,10 @@ export default class Luna {
     this.sprite.y = y;
   }
 
+  stop() {
+    this.setPos(this.sprite.x, this.sprite.y)
+  }
+
   setTarget(tx, ty) {
 
     if(this.container.alpha < 1) {
@@ -62,9 +67,9 @@ export default class Luna {
   update() {
 
     if(this.sprite.y < 300) {
-      this.sprite.scale = 0.5 - 0.5*((300-this.sprite.y)/300);
+      this.sprite.scale = this.baseMaxScale - 0.5*((300-this.sprite.y)/300);
     } else {
-      this.sprite.scale = 0.5;
+      this.sprite.scale = this.baseMaxScale;
     }
 
     if (this.sprite.body.velocity.y === 0 && this.sprite.body.velocity.x === 0) {

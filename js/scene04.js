@@ -55,7 +55,7 @@ export default class Scene04 extends Phaser.Scene {
     
     
 
-    this.child = this.physics.add.image(777, 197, "scene04Child").setSize(130, 130);
+    this.child = this.physics.add.image(777, 197, "scene04Child");
     this.child.scale = 0.4;
 
     this.river = interaction.getPolygon(this, [520,181, 843,186, 672,479, 351,476]);
@@ -66,7 +66,9 @@ export default class Scene04 extends Phaser.Scene {
 
     interaction.exitLeft(this, this.luna, 50, 300, params.exitLeft);
 
-    this.walkable = interaction.getPolygon(this, [19, 135, 444, 205, 319, 461, 18, 454]);
+    interaction.exitUp(this, this.luna, 377, 105, params.exitUp);
+
+    this.walkable = interaction.getPolygon(this, [19, 135, 340,152, 353,88, 398,82, 421,144, 496,197, 330,507, 18,454]);
     this.walkable.on(
       "pointerdown",
       function (pointer) {

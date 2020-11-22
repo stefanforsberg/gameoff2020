@@ -7,6 +7,7 @@ import ImgNavigateRight from "../img/navigate_right.png";
 import ImgNavigateLeft from "../img/navigate_left.png";
 import ImgNavigateUp from "../img/navigate_up.png";
 import AudioScribble from "../audio/scribble.mp3"
+import AudioChildFound from "../audio/childFound.mp3"
 import AudioMainTheme from "../audio/mainTheme.mp3"
 import ImgScene02 from "../img/s02.png";
 
@@ -37,6 +38,8 @@ export default class MainScene extends Phaser.Scene {
 
     this.load.audio("scribble", AudioScribble);
     this.load.audio("mainTheme", AudioMainTheme);
+    this.load.audio("childFound", AudioChildFound);
+    
 
     
 
@@ -53,13 +56,29 @@ export default class MainScene extends Phaser.Scene {
   }
 
   create() {
-    // const luna = this.add.image(400, 300, "luna");
-    // luna.scale = 0.33;
 
     this.sounds = {
       scribble: this.sound.add("scribble", { loop: false, volume: 0.5 }),
       mainTheme: this.sound.add("mainTheme", { loop: true, volume: 1 }),
+      childFound: this.sound.add("childFound", { loop: false, volume: 0.5 }),
+      playChildFound: () => {
+        this.tweens.add({
+          targets:  this.sounds.mainTheme,
+          volume:   0,
+          duration: 1000
+        });
+
+        this.sounds.childFound.play();
+      }
     };    
+
+    this.sounds.childFound.on('complete', () => {
+        this.tweens.add({
+          targets:  this.sounds.mainTheme,
+          volume:   1,
+          duration: 1000
+        });
+    });
 
     this.sounds.mainTheme.play();
 
@@ -99,6 +118,11 @@ export default class MainScene extends Phaser.Scene {
       exitLeft: () => {
         this.luna.setPos(489, 219);
         this.sceneOrder("Scene03", "Scene04");
+      },
+      exitUp: () => {
+        this.luna.baseMaxScale = 0.3;
+        this.luna.setPos(310, 359);
+        this.sceneOrder("Scene07", "Scene04");
       }
     });
 
@@ -107,8 +131,8 @@ export default class MainScene extends Phaser.Scene {
       luna: this.luna,
 
       exitLeft: () => {
-        this.luna.setPos(489, 219);
-        this.sceneOrder("Scene03", "Scene04");
+        this.luna.setPos(757, 319);
+        this.sceneOrder("Scene06", "Scene05");
       }
     });
 
@@ -126,12 +150,34 @@ export default class MainScene extends Phaser.Scene {
       }
     });
 
+    this.scene.launch("Scene07", {
+      parent: this,
+      luna: this.luna,
+
+      exitLeft: () => {
+        this.luna.setPos(361,181);
+        this.luna.baseMaxScale = 0.5;
+        this.sceneOrder("Scene04", "Scene07");
+      },
+    });
+
+    this.scene.launch("Scene08", {
+      parent: this,
+      luna: this.luna,
+
+      exitLeft: () => {
+        this.luna.setPos(361,181);
+        this.luna.baseMaxScale = 0.5;
+        this.sceneOrder("Scene04", "Scene07");
+      },
+    });
+
     this.scene.launch("Scene01", {
       parent: this,
       luna: this.luna,
       exitRight: () => {
         this.luna.setPos(240, 320);
-        this.sceneOrder("Scene05", "Scene01");
+        this.sceneOrder("Scene03", "Scene01");
       },
       lightCb: () => {
         this.scene.manager.getScene("MenuScene").showMenu();
@@ -155,14 +201,6 @@ export default class MainScene extends Phaser.Scene {
       },
       this
     );
-
-    // this.tweens.add({
-    //   targets: [luna],
-    //   x: { value: 1000, duration: 3000 },
-    //   scale: { value: 1, duration: 3000 },
-    //   yoyo: false,
-    //   loop: 0,
-    // });
   }
 
   update() {

@@ -11,5 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "phaser": "^3.24.1"
+  },
+  "devDependencies": {
+    "cssnano": "^4.1.10"
   }
 }

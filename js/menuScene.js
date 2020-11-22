@@ -7,6 +7,7 @@ import ImgPaintRed from "../img/paintRed.png";
 import ImgPaintGreen from "../img/paintGreen.png";
 import ImgPaintOrange from "../img/paintOrange.png";
 import ImgPaintPurple from "../img/paintPurple.png";
+import ImgWood from "../img/s05_wood.png";
 
 export default class MenuScene extends Phaser.Scene {
   constructor() {
@@ -24,7 +25,7 @@ export default class MenuScene extends Phaser.Scene {
     this.load.image("paintGreen", ImgPaintGreen);
     this.load.image("paintOrange", ImgPaintOrange);
     this.load.image("paintPurple", ImgPaintPurple);
-    
+    this.load.image("wood", ImgWood);
   }
 
   create() {
@@ -75,6 +76,9 @@ export default class MenuScene extends Phaser.Scene {
       
     });
 
+    this.wood = this.add.image(750, 530, "wood");
+    this.wood.alpha = 0;
+
     
   }
 
@@ -100,6 +104,15 @@ export default class MenuScene extends Phaser.Scene {
   addRed() {
     this.tweens.add({
       targets: [this.paintRed],
+      alpha: { value: 1, duration: 1000 },
+      yoyo: false,
+      loop: 0,
+    });
+  }
+
+  addWood() {
+    this.tweens.add({
+      targets: [this.wood],
       alpha: { value: 1, duration: 1000 },
       yoyo: false,
       loop: 0,

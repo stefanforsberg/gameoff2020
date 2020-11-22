@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import SceneBase from "../js/sceneBase"
 import ImgScene06 from "../img/s06.png";
 import ImgIce from "../img/s06_ice.png";
 import ImgSun from "../img/s06_sun.png";
@@ -8,7 +9,7 @@ import interaction from "../js/interaction.js";
 import AudioIceMelt from "../audio/iceMelt.mp3"
 import AudioIceBreak from "../audio/iceBreak.mp3"
 
-export default class Scene06 extends Phaser.Scene {
+export default class Scene06 extends SceneBase {
   constructor() {
     super({
       key: "Scene06",
@@ -34,8 +35,11 @@ export default class Scene06 extends Phaser.Scene {
   }
 
   create(params) {
+    console.log(this.setParams)
+    this.setParams(params);
+
     console.log("creating scene 06");
-    
+
     this.iceMelt = this.sound.add("iceMelt", { loop: false, volume: 1 });
     this.iceBreak = this.sound.add("iceBreak", { loop: false, volume: 1 });
 
@@ -46,6 +50,20 @@ export default class Scene06 extends Phaser.Scene {
     this.add.image(512, 300, "scene06");
 
     this.child = this.physics.add.image(465, 170, "child06");
+
+    this.child.setInteractive();
+    this.child.on("pointerdown", () => {
+      if(this.sunColor.alpha === 0) {
+        this.canMove = false;
+        interaction.writeText("Luna: Oh no, my poor child appears to be frozen solid. Maybe I can find a way to melt the ice...?", true, () => {this.canMove = true});
+      } else {
+        if (this.input.manager.defaultCursor === "" && this.canMove) {
+          params.luna.setTarget(461, 235);
+        }
+      }
+      
+      
+    })
 
     this.sprite = this.add.sprite(465,200, "ice", 0);
     this.sprite.alpha = 0.8;
@@ -63,6 +81,8 @@ export default class Scene06 extends Phaser.Scene {
 
       this.sunColor.alpha = 1;
 
+      this.canMove = false;
+
       this.time.addEvent({
         delay: 2000,
         callback: () => {
@@ -75,20 +95,28 @@ export default class Scene06 extends Phaser.Scene {
             callback: () => {
               this.iceMelt.play();
               this.sprite.anims.play("ice-melt");
-    
-              params.parent.scene.resume();
+
+              this.canMove = true;
     
               const overlap = this.physics.add.overlap(this.child, this.luna.sprite, () => {
+
+                this.luna.stop();
+
+                params.parent.sounds.playChildFound();
+
+                this.canMove = false;
+
                 overlap.destroy();
                 this.scene.launch("HeartScene", {x: this.child.x, y: this.child.y})
                 this.scene.bringToTop("HeartScene");
-                params.parent.scene.pause();
           
                 this.time.addEvent({
                   delay: 2000,
                   callback: () => {
                     this.scene.stop("HeartScene")
           
+                    this.canMove = true;
+
                     this.tweens.add({
                       targets: [this.child ],
                       alpha: { value: 0, duration: 2000 },
@@ -100,7 +128,6 @@ export default class Scene06 extends Phaser.Scene {
                       onComplete: () => {
                         
                         this.scene.manager.getScene("MenuScene").addBlue();
-                        params.parent.scene.resume();
                       }
                     });
                   },
@@ -121,7 +148,7 @@ export default class Scene06 extends Phaser.Scene {
 
 
 
-      params.parent.scene.pause();
+      
 
       
     });
@@ -147,16 +174,17 @@ export default class Scene06 extends Phaser.Scene {
 
     interaction.exitRight(this, params.luna, 900, 300, params.exitRight)
 
-    this.walkable = interaction.getPolygon(this, [40,308,462,219,538,253,902,291,902,405,40,405]);
-    this.walkable.on(
-      "pointerdown",
-      function (pointer) {
-        if (this.input.manager.defaultCursor === "") {
-          params.luna.setTarget(pointer.worldX, pointer.worldY);
-        }
-      },
-      this
-    );
+    super.setWalkable([40,308,462,219,538,253,902,291,902,405,40,405])
+    // this.walkable = interaction.getPolygon(this, [40,308,462,219,538,253,902,291,902,405,40,405]);
+    // this.walkable.on(
+    //   "pointerdown",
+    //   function (pointer) {
+    //     if (this.input.manager.defaultCursor === "" && this.canMove) {
+    //       params.luna.setTarget(pointer.worldX, pointer.worldY);
+    //     }
+    //   },
+    //   this
+    // );
 
     
 
