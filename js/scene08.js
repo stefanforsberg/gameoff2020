@@ -34,7 +34,7 @@ export default class Scene08 extends SceneBase {
     this.add.image(512, 300, "scene08");
     
     this.flowerColor = this.add.image(367, 266, "flowerColor");
-    this.flowerColor.alpha = 0.3;
+    this.flowerColor.alpha = 0;
     this.flowerColor.setInteractive();
     interaction.click(this, this.flowerColor, "Purple", true, () => {
         this.flowerColor.alpha = 1;

@@ -85,6 +85,15 @@ export default class SceneIntro extends Phaser.Scene {
 
       this.introTheme.play();
 
+      this.time.addEvent({
+        delay: 67000,
+        callback: () => {
+          this.end();
+        },
+        callbackScope: this,
+        loop: false,
+      });
+
       this.tweens.add({
         targets: [this.intro01],
         alpha: { value: 1, duration: 2000 },
@@ -152,7 +161,7 @@ export default class SceneIntro extends Phaser.Scene {
       }
     });
 
-    this.cameras.main.fade(3000);
+    this.cameras.main.fade(3000, 13, 9, 9);
     
   }
 

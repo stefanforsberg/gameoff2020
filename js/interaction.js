@@ -57,9 +57,16 @@ const click = function(scene, gameObject, cursor, remove, cb) {
 
 
 
-const exitUp = function(scene, luna, x, y, cb) {
+const exitUp = function(scene, luna, x, y, cb, yOffset) {
+    
+    if(!yOffset) {
+        yOffset = -80
+    }
+
+    console.log("offset: " + yOffset)
+
     const i = exit(scene, luna, x, y, "navigateUp", cb);
-    i.body.setOffset(-20,-80);
+    i.body.setOffset(-20, yOffset);
 }
 
 const exitDown = function(scene, luna, x, y, cb) {

@@ -1,4 +1,4 @@
-import Phaser from "phaser";
+import SceneBase from "../js/sceneBase";
 import ImgScene04 from "../img/s04.png";
 import ImgScene04Color from "../img/s04_color.png";
 import ImgScene04Child from "../img/s04_child.png";
@@ -6,7 +6,7 @@ import ImgScene04Waves from "../img/s04_waves.png";
 import AudioRiver from "../audio/river.mp3"
 import interaction from "../js/interaction.js";
 
-export default class Scene04 extends Phaser.Scene {
+export default class Scene04 extends SceneBase {
   constructor() {
     super({
       key: "Scene04",
@@ -29,6 +29,8 @@ export default class Scene04 extends Phaser.Scene {
 
   create(params) {
     console.log("creating scene 04");
+
+    super.setParams(params);
 
     this.riverSound = this.sound.add("river", { loop: true, volume: 0.4 });
 
@@ -56,7 +58,7 @@ export default class Scene04 extends Phaser.Scene {
     
 
     this.child = this.physics.add.image(777, 197, "scene04Child");
-    this.child.scale = 0.4;
+    this.child.scale = 0.6;
 
     this.river = interaction.getPolygon(this, [520,181, 843,186, 672,479, 351,476]);
 
@@ -66,18 +68,10 @@ export default class Scene04 extends Phaser.Scene {
 
     interaction.exitLeft(this, this.luna, 50, 300, params.exitLeft);
 
-    interaction.exitUp(this, this.luna, 377, 105, params.exitUp);
+    interaction.exitUp(this, this.luna, 377, 145, params.exitUp, -100);
 
-    this.walkable = interaction.getPolygon(this, [19, 135, 340,152, 353,88, 398,82, 421,144, 496,197, 330,507, 18,454]);
-    this.walkable.on(
-      "pointerdown",
-      function (pointer) {
-        if (this.input.manager.defaultCursor === "") {
-          params.luna.setTarget(pointer.worldX, pointer.worldY);
-        }
-      },
-      this
-    );
+    super.setWalkable([19, 135, 340,152, 353,88, 398,82, 421,144, 496,197, 384,402, 400,402, 390, 471, 347, 473, 330,507, 18,454])
+
     this.scene.scene.events.on('pause', () => 
     {
       if(this.riverSound.isPlaying) {
@@ -111,9 +105,9 @@ export default class Scene04 extends Phaser.Scene {
       params.parent.scene.pause();
       this.tweens.add({
         targets: [this.child],
-        scale: { value: 1, duration: 3000 },
-        x: { value: 390, duration: 3000 },
-        y: { value: 390, duration: 3000 },
+        scale: { value: 1, duration: 4000 },
+        x: { value: 370, duration: 4000 },
+        y: { value: 425, duration: 4000 },
         yoyo: false,
         loop: 0,
         onComplete: () => {
@@ -126,6 +120,7 @@ export default class Scene04 extends Phaser.Scene {
   setupPickupChild(params) {
     const overlap = this.physics.add.overlap(this.child, this.luna.sprite, () => {
       overlap.destroy();
+      this.params.parent.sounds.playChildFound();
       this.scene.launch("HeartScene", { x: this.child.x, y: this.child.y });
       this.scene.bringToTop("HeartScene");
       params.parent.scene.pause();

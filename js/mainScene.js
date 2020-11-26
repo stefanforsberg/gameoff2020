@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import game from "../js/index.js"
 import Luna from "../js/luna.js";
 import ImgLuna from "../img/luna.png";
 import ImgLunaShadow from "../img/lunaShadow.png";
@@ -84,8 +85,13 @@ export default class MainScene extends Phaser.Scene {
     });
 
     
+    if(game.config.physics.arcade.debug) {
+      this.start();
+    } else {
+      this.scene.launch("SceneIntro", { cb: () => {this.start();}});
+    }
     
-    this.scene.launch("SceneIntro", { cb: () => {this.start();}});
+    
   }
 
   start() {
@@ -188,7 +194,7 @@ export default class MainScene extends Phaser.Scene {
       luna: this.luna,
 
       exitLeft: () => {
-        this.luna.setPos(361,181);
+        this.luna.setPos(361,281);
         this.luna.baseMaxScale = 0.5;
         this.sceneOrder("Scene04", "Scene07");
       },

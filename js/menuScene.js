@@ -29,7 +29,7 @@ export default class MenuScene extends Phaser.Scene {
   }
 
   create() {
-    this.paintHolder = this.add.image(512, 635, "paintHolder");
+    this.paintHolder = this.add.image(512, 535, "paintHolder");
     this.paintHolder.alpha = 0;
 
     this.paintYellow = this.add.image(426, 528, "paintYellow");
@@ -47,7 +47,7 @@ export default class MenuScene extends Phaser.Scene {
     });
 
     this.paintBlue = this.add.image(480, 526, "paintBlue");
-    this.paintBlue.alpha = 1;
+    this.paintBlue.alpha = 0;
     this.paintBlue.setInteractive();
 
     this.paintBlue.on("pointerdown", () => {
@@ -62,7 +62,7 @@ export default class MenuScene extends Phaser.Scene {
     });
 
     this.paintRed = this.add.image(532, 525, "paintRed");
-    this.paintRed.alpha = 1;
+    this.paintRed.alpha = 0;
     this.paintRed.setInteractive();
 
     this.paintRed.on("pointerdown", () => {
@@ -79,7 +79,7 @@ export default class MenuScene extends Phaser.Scene {
     this.wood = this.add.image(750, 530, "wood");
     this.wood.alpha = 0;
 
-    this.axe = this.add.image(790, 530, "axe");
+    this.axe = this.add.image(810, 530, "axe");
     this.axe.alpha = 0;
 
     
@@ -89,7 +89,6 @@ export default class MenuScene extends Phaser.Scene {
     this.tweens.add({
       targets: [this.paintHolder],
       alpha: { value: 1, duration: 1000 },
-      y: {value: 535, duration: 1000},
       yoyo: false,
       loop: 0,
     });

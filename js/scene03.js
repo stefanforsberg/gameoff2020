@@ -29,16 +29,6 @@ export default class Scene03 extends SceneBase {
     interaction.exitUp(this, params.luna, 525, 100, params.exitUp)
 
     super.setWalkable([48,283,473,279,493,16,584,17,606,264,967,307,960,430,34,423])
-    // this.walkable = interaction.getPolygon(this, [48,283,473,279,493,16,584,17,606,264,967,307,960,430,34,423])
-    // this.walkable.on(
-    //   "pointerdown",
-    //   function (pointer) {
-    //     if (this.input.manager.defaultCursor === "") {
-    //       params.luna.setTarget(pointer.worldX, pointer.worldY);
-    //     }
-    //   },
-    //   this
-    // );
 
     this.scene.pause();
   }
