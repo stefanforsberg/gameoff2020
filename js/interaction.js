@@ -62,6 +62,10 @@ const exitUp = function(scene, luna, x, y, cb) {
     i.body.setOffset(-20,-80);
 }
 
+const exitDown = function(scene, luna, x, y, cb) {
+    exit(scene, luna, x, y, "navigateDown", cb);
+}
+
 const exitRight = function(scene, luna, x, y, cb) {
     exit(scene, luna, x, y, "navigateRight", cb);
 }
@@ -111,7 +115,7 @@ const writeText = function(text, hide, cb) {
                 if(cb) {
                     cb();
                 }
-            }, 2000);
+            }, 3000);
             
             
           }
@@ -120,4 +124,4 @@ const writeText = function(text, hide, cb) {
     updateContainer();
 }
 
-export default {polygon, getPolygon, exitRight, exitLeft, exitUp, click, writeText} 
+export default {polygon, getPolygon, exitRight, exitLeft, exitUp, exitDown, click, writeText} 

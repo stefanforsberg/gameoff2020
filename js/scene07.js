@@ -1,12 +1,13 @@
-import Phaser from "phaser";
+import SceneBase from "../js/sceneBase";
 import ImgScene07 from "../img/s07.png";
 import ImgHacker from "../img/s07_hacker.png";
 import ImgGems from "../img/s07_gems.png";
+import ImgGemsColor from "../img/s07_gemsColor.png";
+import ImgAxe from "../img/s07_axe.png";
 import interaction from "../js/interaction.js";
-import AudioHack from "../audio/hack.mp3"
+import AudioHack from "../audio/hack.mp3";
 
-
-export default class Scene07 extends Phaser.Scene {
+export default class Scene07 extends SceneBase {
   constructor() {
     super({
       key: "Scene07",
@@ -16,7 +17,8 @@ export default class Scene07 extends Phaser.Scene {
   preload() {
     this.load.image("scene07", ImgScene07);
     this.load.image("scene07Gems", ImgGems);
-    
+    this.load.image("scene07GemsColor", ImgGemsColor);
+    this.load.image("scene07Axe", ImgAxe);
 
     this.load.spritesheet("hacker", "./" + ImgHacker, {
       frameWidth: 78,
@@ -29,24 +31,16 @@ export default class Scene07 extends Phaser.Scene {
   }
 
   create(params) {
+    super.setParams(params);
     console.log("creating scene 07");
 
     this.hack = this.sound.add("hack", { loop: false, volume: 0.1 });
 
-    
-
-    // this.input.topOnly = false;
-
-    // this.luna = params.luna;
-
     this.add.image(512, 300, "scene07");
-    // this.sceneColor = this.add.image(512, 300, "scene04Color");
-    // this.sceneColor.alpha = 0;
 
-    this.add.image(649,321, "scene07Gems")
+    this.setupGems();
 
-    this.hacker = this.add.sprite(507,263, "hacker", 0).setSize(78, 87);
-    // this.waves.alpha = 0;
+    this.hacker = this.add.sprite(507, 263, "hacker", 0).setSize(78, 87);
 
     this.hacker.scale = 1.4;
 
@@ -61,49 +55,69 @@ export default class Scene07 extends Phaser.Scene {
       yoyo: true,
     });
 
-    this.hacker.anims.play("hacker").on('animationrepeat', () => { this.hack.play()});
-    
+    this.hacker.anims.play("hacker").on("animationrepeat", () => {
+      this.hack.play();
+    });
 
-    // this.child = this.physics.add.image(777, 197, "scene04Child");
-    // this.child.scale = 0.4;
+    this.hacker.setInteractive();
+    this.hacker.on("pointerdown", () => {
+      this.canMove = false;
+      interaction.writeText("Miner: I just need some jade gems and I can return home", true, () => {
+        this.canMove = true;
+      });
+    });
 
-    // this.river = interaction.getPolygon(this, [520,181, 843,186, 672,479, 351,476]);
+    interaction.exitLeft(this, params.luna, 177,342, params.exitLeft);
 
-    // this.setupRiverClick(params);
-
-    // this.setupPickupChild(params);
-
-    interaction.exitLeft(this, params.luna, 174, 383, params.exitLeft);
-
-    // interaction.exitUp(this, this.luna, 377, 105, params.exitUpt);
-
-    this.walkable = interaction.getPolygon(this, [182,356, 561,309, 594,389, 356,386, 172,412]);
-    this.walkable.on(
-      "pointerdown",
-      function (pointer) {
-        if (this.input.manager.defaultCursor === "") {
-          params.luna.setTarget(pointer.worldX, pointer.worldY);
-        }
-      },
-      this
-    );
-    // this.scene.scene.events.on('pause', () => 
-    // {
-    //   if(this.riverSound.isPlaying) {
-    //     this.riverSound.pause();
-    //   }
-    // });
-
-    // this.scene.scene.events.on('resume', () => 
-    // {
-    //   if(this.riverSound.isPaused) {
-    //     this.riverSound.resume();
-    //   }
-    // });
+    super.setWalkable([168,315, 346,264, 441,324,558,310,591,387, 148,405]);
 
     this.scene.pause();
+  }
 
+  setupGems() {
+    this.gems = this.add.image(649, 321, "scene07Gems");
+    this.gems.setInteractive();
 
+    this.gemsColor = this.add.image(649, 321, "scene07GemsColor");
+    this.gemsColor.alpha = 0;
+
+    interaction.click(this, this.gems, "Green", true, () => {
+      console.log("yese");
+      this.params.parent.sounds.scribble.play();
+
+      this.gemsColor.alpha = 1;
+
+      this.canMove = false;
+      this.setupAxe();
+      this.hacker.destroy();
+      interaction.writeText("Miner: Ah thank you mysterious friend, I can finally return home to my family!", true, () => {
+        this.canMove = true;
+      });
+    });
+  }
+
+  setupAxe() {
+    this.axe = this.physics.add.sprite(518, 334, "scene07Axe");
+
+    const overlap = this.physics.add.overlap(this.axe, this.params.luna.sprite, () => {
+      this.params.luna.stop();
+      this.canMove = false;
+      overlap.destroy();
+
+      this.tweens.add({
+        targets: [this.axe],
+        x: { value: 790, duration: 1000 },
+        y: { value: 530, duration: 1000 },
+        yoyo: false,
+        loop: 0,
+        onComplete: () => {
+          this.axe.destroy();
+          this.canMove = true;
+        }
+      });
+
+      this.scene.manager.getScene("MenuScene").addAxe();
+    });
   }
 
   update() {}

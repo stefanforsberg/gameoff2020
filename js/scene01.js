@@ -1,11 +1,9 @@
-import Phaser from "phaser";
-import CursorWalk from "../img/cursorWalk.png";
-import CursorNo from "../img/cursorNo.png";
+import SceneBase from "../js/sceneBase";
 import interaction from "../js/interaction.js";
 
 import ImgLunaStandUpSheet from "../img/lunastandup.png";
 
-export default class Scene01 extends Phaser.Scene {
+export default class Scene01 extends SceneBase {
   constructor() {
     super({
       key: "Scene01",
@@ -22,23 +20,26 @@ export default class Scene01 extends Phaser.Scene {
   }
 
   create(params) {
-    console.log("scene 1");
-
-    this.params = params;
+    super.setParams(params);
 
     this.backgroundDark = this.add.graphics();
     this.backgroundDark.fillStyle(0x0d0909);
     this.backgroundDark.fillRect(0, 0, 1024, 600);
 
-    // interaction.writeText("Mysterious voice: The world has lost its color. Luna, the daughter of the moon, can help restore color to the world but first she needs your help restoring her own color.}}I managed to save her yellow essence, click it and then click on her.", true, () => {
-    //   this.start();
-    // })
 
-    this.start();
-    
+
+    this.scene.scene.events.on('resume', () => 
+    {
+      interaction.writeText("Mysterious voice: The world has lost its color. Luna, the daughter of the moon, can help restore color to the world but first she needs your help restoring her own color.}}I managed to save her yellow essence, click it and then click on her.", true, () => {
+        this.start();
+      })
+    });
+
+    this.scene.pause();
   }
 
   start() {
+    
     this.input.on(
       "pointerdown",
       function (pointer, x) {

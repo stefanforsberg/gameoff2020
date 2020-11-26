@@ -1,4 +1,3 @@
-import Phaser from "phaser";
 import SceneBase from "../js/sceneBase"
 import ImgScene06 from "../img/s06.png";
 import ImgIce from "../img/s06_ice.png";
@@ -30,12 +29,9 @@ export default class Scene06 extends SceneBase {
 
     this.load.audio("iceMelt", AudioIceMelt);
     this.load.audio("iceBreak", AudioIceBreak);
-
-    
   }
 
   create(params) {
-    console.log(this.setParams)
     this.setParams(params);
 
     console.log("creating scene 06");
@@ -170,23 +166,15 @@ export default class Scene06 extends SceneBase {
       yoyo: false,
     });
 
-    interaction.exitLeft(this, params.luna, 50, 300, params.exitLeft);
+    interaction.exitLeft(this, params.luna, 107,357, params.exitLeft);
 
-    interaction.exitRight(this, params.luna, 900, 300, params.exitRight)
+    interaction.exitRight(this, params.luna, 862, 361, params.exitRight)
 
-    super.setWalkable([40,308,462,219,538,253,902,291,902,405,40,405])
-    // this.walkable = interaction.getPolygon(this, [40,308,462,219,538,253,902,291,902,405,40,405]);
-    // this.walkable.on(
-    //   "pointerdown",
-    //   function (pointer) {
-    //     if (this.input.manager.defaultCursor === "" && this.canMove) {
-    //       params.luna.setTarget(pointer.worldX, pointer.worldY);
-    //     }
-    //   },
-    //   this
-    // );
+    interaction.exitDown(this, params.luna, 474, 423, params.exitDown)
 
     
+
+    super.setWalkable([40,308,462,219,538,253,902,291,902,405, 536,406,526,460,421,463, 419,404, 40,405])
 
     this.scene.pause();
   }

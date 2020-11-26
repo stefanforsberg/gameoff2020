@@ -1,5 +1,4 @@
 import Phaser from "phaser";
-import ImgPaintHolderBlack from "../img/paintHolderBlack.png";
 import ImgPaintHolder from "../img/paintHolder.png";
 import ImgPaintYellow from "../img/paintYellow.png";
 import ImgPaintBlue from "../img/paintBlue.png";
@@ -8,6 +7,7 @@ import ImgPaintGreen from "../img/paintGreen.png";
 import ImgPaintOrange from "../img/paintOrange.png";
 import ImgPaintPurple from "../img/paintPurple.png";
 import ImgWood from "../img/s05_wood.png";
+import ImgAxe from "../img/s07_axe.png";
 
 export default class MenuScene extends Phaser.Scene {
   constructor() {
@@ -17,7 +17,6 @@ export default class MenuScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("paintHolderBlack", ImgPaintHolderBlack);
     this.load.image("paintHolder", ImgPaintHolder);
     this.load.image("paintYellow", ImgPaintYellow);
     this.load.image("paintBlue", ImgPaintBlue);
@@ -26,6 +25,7 @@ export default class MenuScene extends Phaser.Scene {
     this.load.image("paintOrange", ImgPaintOrange);
     this.load.image("paintPurple", ImgPaintPurple);
     this.load.image("wood", ImgWood);
+    this.load.image("axe", ImgAxe);
   }
 
   create() {
@@ -79,6 +79,9 @@ export default class MenuScene extends Phaser.Scene {
     this.wood = this.add.image(750, 530, "wood");
     this.wood.alpha = 0;
 
+    this.axe = this.add.image(790, 530, "axe");
+    this.axe.alpha = 0;
+
     
   }
 
@@ -113,6 +116,15 @@ export default class MenuScene extends Phaser.Scene {
   addWood() {
     this.tweens.add({
       targets: [this.wood],
+      alpha: { value: 1, duration: 1000 },
+      yoyo: false,
+      loop: 0,
+    });
+  }
+
+  addAxe() {
+    this.tweens.add({
+      targets: [this.axe],
       alpha: { value: 1, duration: 1000 },
       yoyo: false,
       loop: 0,

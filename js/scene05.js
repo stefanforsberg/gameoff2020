@@ -1,4 +1,4 @@
-import Phaser from "phaser";
+import SceneBase from "../js/sceneBase"
 import ImgScene05 from "../img/s05.png";
 import ImgSunbather from "../img/s05_sunbather.png";
 import ImgTree from "../img/s05_tree.png";
@@ -10,7 +10,7 @@ import interaction from "../js/interaction.js";
 import AudioBeach from "../audio/beach.mp3";
 import AudioRain from "../audio/rain.mp3";
 
-export default class Scene05 extends Phaser.Scene {
+export default class Scene05 extends SceneBase {
   constructor() {
     super({
       key: "Scene05",
@@ -43,6 +43,7 @@ export default class Scene05 extends Phaser.Scene {
   }
 
   create(params) {
+    this.setParams(params);
     console.log("creating scene 05");
 
     this.beach = this.sound.add("beach", { loop: true, volume: 1 });
@@ -81,17 +82,9 @@ export default class Scene05 extends Phaser.Scene {
     this.setupTree(params);
 
     interaction.exitLeft(this, this.luna, 50, 300, params.exitLeft);
+    interaction.exitRight(this, this.luna, 829, 235, params.exitRight);
 
-    this.walkable = interaction.getPolygon(this, [35, 231, 352,211, 361,169, 418,166, 423, 208, 874,181, 875,280, 490,360, 44,373]);
-    this.walkable.on(
-      "pointerdown",
-      function (pointer) {
-        if (this.input.manager.defaultCursor === "") {
-          params.luna.setTarget(pointer.worldX, pointer.worldY);
-        }
-      },
-      this
-    );
+    super.setWalkable([35, 231, 352,211, 361,169, 418,166, 423, 208, 874,181, 875,280, 490,360, 44,373])
 
     this.scene.scene.events.on("pause", () => {
       if (this.beach.isPlaying) {
@@ -191,15 +184,31 @@ export default class Scene05 extends Phaser.Scene {
           loop: 0,
         });
 
-        this.tweens.add({
-          targets: [this.sprite],
-          alpha: { value: 0, duration: 1000 },
-          yoyo: false,
-          loop: 0,
-          onComplete: () => {
-            this.sprite.destroy();
-          },
+        
+        this.canMove = false;
+
+        this.time.addEvent({
+          delay: 2000,
+          callback: () => {
+
+            this.tweens.add({
+              targets: [this.sprite],
+              alpha: { value: 0, duration: 1000 },
+              yoyo: false,
+              loop: 0,
+              onComplete: () => {
+                this.sprite.destroy();
+              },
+            });
+    
+            
+            interaction.writeText("Lazy sunbather: GAHHH, cold! Must! Run! Home!", true, () => {
+              this.canMove = true;
+            });
+          }
         });
+
+
       }
     });
   }
