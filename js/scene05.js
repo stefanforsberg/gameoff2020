@@ -62,7 +62,8 @@ export default class Scene05 extends SceneBase {
       if (this.sprite.active) {
         this.luna.setPos(271, 307);
 
-        interaction.writeText("Lazy sunbather: This is my wood, keep away!", true, () => {});
+        this.canMove = false;
+        interaction.writeText("Lazy sunbather: This is my wood, keep away!", true, () => {this.canMove = true;});
       } else {
         this.overlapWood.destroy();
         this.tweens.add({
@@ -234,6 +235,7 @@ export default class Scene05 extends SceneBase {
     this.sprite.anims.play("sunbather-drink");
 
     this.sprite.setInteractive();
+    interaction.setTalkCursor(this.sprite);
 
     this.sprite.on(
       "pointerdown",

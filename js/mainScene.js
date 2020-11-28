@@ -61,6 +61,15 @@ export default class MainScene extends Phaser.Scene {
 
   create() {
 
+    
+    this.input.on(
+      "pointerdown",
+      function (pointer) {
+          console.log(pointer.worldX + "," + pointer.worldY);
+      },
+      this
+    );
+
     this.sounds = {
       scribble: this.sound.add("scribble", { loop: false, volume: 0.5 }),
       mainTheme: this.sound.add("mainTheme", { loop: true, volume: 0 }),
@@ -120,11 +129,17 @@ export default class MainScene extends Phaser.Scene {
     });
 
     this.scene.launch("Scene02", {
+      parent: this,
       luna: this.luna,
       exitLeft: () => {
         this.luna.setPos(716, 271);
 
         this.sceneOrder("Scene05", "Scene02");
+      },
+      exitRight: () => {
+        this.luna.setPos(258, 229);
+
+        this.sceneOrder("Scene09", "Scene02");
       },
     });
 
@@ -162,8 +177,8 @@ export default class MainScene extends Phaser.Scene {
       luna: this.luna,
 
       exitLeft: () => {
-        this.luna.setPos(757, 319);
-        this.sceneOrder("Scene06", "Scene05");
+        this.luna.setPos(835, 490);
+        this.sceneOrder("Scene10", "Scene05");
       },
       exitRight: () => {
         this.luna.setPos(209, 309)
@@ -180,8 +195,8 @@ export default class MainScene extends Phaser.Scene {
         this.sceneOrder("Scene03", "Scene06");
       },
       exitRight: () => {
-        this.luna.setPos(176, 322);
-        this.sceneOrder("Scene05", "Scene06");
+        this.luna.setPos(254,483);
+        this.sceneOrder("Scene10", "Scene06");
       },
       exitDown: () => {
         this.luna.setPos(305, 389);
@@ -210,9 +225,28 @@ export default class MainScene extends Phaser.Scene {
       },
     });
 
+    this.scene.launch("Scene09", {
+      parent: this,
+      luna: this.luna,
+      exitLeft: () => {
+        this.luna.setPos(725, 317);
 
+        this.sceneOrder("Scene02", "Scene09");
+      },
+    });
 
-    this.sceneOrder("Scene01");
+    this.scene.launch("Scene10", {
+      parent: this,
+      luna: this.luna,
+      exitLeft: () => {
+        this.luna.setPos(734, 376);
+        this.sceneOrder("Scene06", "Scene06");
+      },
+      exitRight: () => {
+        this.luna.setPos(176, 322);
+        this.sceneOrder("Scene05", "Scene10");
+      },
+    });
 
     setTimeout(() => {
       this.sceneOrder("Scene01");

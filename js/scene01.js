@@ -1,5 +1,6 @@
 import SceneBase from "../js/sceneBase";
 import interaction from "../js/interaction.js";
+import game from "../js/index.js"
 
 import ImgLunaStandUpSheet from "../img/lunastandup.png";
 
@@ -30,9 +31,14 @@ export default class Scene01 extends SceneBase {
 
     this.scene.scene.events.on('resume', () => 
     {
-      interaction.writeText("Mysterious voice: The world has lost its color. Luna, the daughter of the moon, can help restore color to the world but first she needs your help restoring her own color.}}I managed to save her yellow essence, click it and then click on her.", true, () => {
+      if(game.config.physics.arcade.debug) {
         this.start();
-      }, true)
+      } else {
+        interaction.writeText("Mysterious voice: The world has lost its color. Luna, the daughter of the moon, can help restore color to the world but first she needs your help restoring her own color.}}I managed to save her yellow essence, click it and then click on her.", true, () => {
+          this.start();
+        }, true)
+      }
+      
     });
 
     this.scene.pause();
@@ -40,21 +46,9 @@ export default class Scene01 extends SceneBase {
 
   start() {
     
-    this.input.on(
-      "pointerdown",
-      function (pointer, x) {
-        if (this.input.manager.defaultCursor === "") {
-          this.params.luna.setTarget(pointer.worldX, pointer.worldY);
-        }
-      },
-      this
-    );
-
-
-
     this.spritestandup = this.add.sprite(200, 290, "lunastandup", 0).setSize(270, 240);
 
-    this.spritestandup.scale = 0.63;
+    this.spritestandup.scale = 0.62;
 
     this.backgroundBright = this.add.graphics();
     this.backgroundBright.fillStyle(0xf5f4f0);
@@ -98,6 +92,9 @@ export default class Scene01 extends SceneBase {
               loop: 0,
               onComplete: () => {
                 this.params.lightCb();
+                
+                this.setWalkable([40,40, 1160,40, 1160,560, 40, 560]);
+
                 interaction.exitRight(this, this.params.luna, 900, 300, this.params.exitRight);
               },
             });
@@ -107,6 +104,8 @@ export default class Scene01 extends SceneBase {
         loop: false,
       });
     });
+
+    
   }
 
   update() {}

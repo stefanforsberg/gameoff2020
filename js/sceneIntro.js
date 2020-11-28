@@ -48,14 +48,6 @@ export default class SceneIntro extends Phaser.Scene {
   create(params) {
     console.log("scene intro");
 
-    this.input.on(
-      "pointerdown",
-      function (pointer, x) {
-          console.log("intro scene");
-      },
-      this
-    );
-
     this.params = params;
 
     this.introTheme = this.sound.add("introTheme", { loop: false, volume: 1 });
@@ -86,7 +78,7 @@ export default class SceneIntro extends Phaser.Scene {
       this.introTheme.play();
 
       this.time.addEvent({
-        delay: 67000,
+        delay: 47000,
         callback: () => {
           this.end();
         },
@@ -113,7 +105,7 @@ export default class SceneIntro extends Phaser.Scene {
           this.introPart1();
 
           this.time.addEvent({
-            delay: 27500,
+            delay: 3650,
             callback: () => {
               this.introPart2();
             },
@@ -122,7 +114,7 @@ export default class SceneIntro extends Phaser.Scene {
           });
       
           this.time.addEvent({
-            delay: 36000,
+            delay: 11000,
             callback: () => {
               this.introPart3();
             },
@@ -131,7 +123,7 @@ export default class SceneIntro extends Phaser.Scene {
           });
 
           this.time.addEvent({
-            delay: 51000,
+            delay: 22000,
             callback: () => {
               this.introPart4();
             },
@@ -183,42 +175,6 @@ export default class SceneIntro extends Phaser.Scene {
       lifespan: 1000,
     });
 
-    this.being = this.add.image(-100, 320, "being");
-    this.being.flipX = true;
-    this.being.scale = 0.6;
-
-    this.tweens.add({
-      targets: [this.being],
-      x: { value: 150, duration: 8000 },
-      yoyo: false,
-      loop: 0,
-    });
-
-    this.time.addEvent({
-      delay: 10000,
-      callback: () => {
-        interaction.writeText(
-          "Noom: I've been cast away.",
-          true,
-          () => {}
-        );
-      },
-      callbackScope: this,
-      loop: false,
-    });
-
-    this.time.addEvent({
-      delay: 18000,
-      callback: () => {
-        interaction.writeText(
-          "Noom: I will make them pay",
-          true,
-          () => {}
-        );
-      },
-      callbackScope: this,
-      loop: false,
-    });
   }
 
   introPart2() {
@@ -302,7 +258,7 @@ export default class SceneIntro extends Phaser.Scene {
             this.stars.setLifespan(8000);
 
             this.time.addEvent({
-              delay: 7000,
+              delay: 3000,
               callback: () => {
                 this.tweens.add({
                   targets: [this.luna ],
@@ -402,8 +358,8 @@ export default class SceneIntro extends Phaser.Scene {
         this.stars2.stop();
         this.tweens.add({
           targets: [this.earthNoColor],
-          alpha: { value: 1, duration: 3000 },
-          ease: "Quad",
+          alpha: { value: 1, duration: 8000 },
+          ease: "Power",
           yoyo: false,
           loop: 0,
         });

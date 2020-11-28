@@ -40,7 +40,8 @@ export default class Scene07 extends SceneBase {
 
     this.setupGems();
 
-    this.hacker = this.add.sprite(507, 263, "hacker", 0).setSize(78, 87);
+    this.hacker = this.add.sprite(769, 329, "hacker", 0).setSize(78, 87);
+    this.hacker.flipX = true;
 
     this.hacker.scale = 1.4;
 
@@ -60,16 +61,17 @@ export default class Scene07 extends SceneBase {
     });
 
     this.hacker.setInteractive();
+    interaction.setTalkCursor(this.hacker);
     this.hacker.on("pointerdown", () => {
       this.canMove = false;
-      interaction.writeText("Miner: I just need some jade gems and I can return home", true, () => {
+      interaction.writeText("Miner: I just need some jade gems and I can return home.", true, () => {
         this.canMove = true;
       });
     });
 
     interaction.exitLeft(this, params.luna, 177,342, params.exitLeft);
 
-    super.setWalkable([168,315, 346,264, 441,324,558,310,591,387, 148,405]);
+    super.setWalkable([168,315, 346,264, 441,324,  441,405, 148,405]);
 
     this.scene.pause();
   }
@@ -92,6 +94,7 @@ export default class Scene07 extends SceneBase {
       this.hacker.destroy();
       interaction.writeText("Miner: Ah thank you mysterious friend, I can finally return home to my family!", true, () => {
         this.canMove = true;
+        super.setWalkable([168,315, 346,264, 441,324, 558,310, 591,387, 148,405]);
       });
     });
   }

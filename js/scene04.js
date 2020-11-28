@@ -120,26 +120,31 @@ export default class Scene04 extends SceneBase {
   setupPickupChild(params) {
     const overlap = this.physics.add.overlap(this.child, this.luna.sprite, () => {
       overlap.destroy();
-      this.params.parent.sounds.playChildFound();
-      this.scene.launch("HeartScene", { x: this.child.x, y: this.child.y });
+      
+      this.luna.stop();
+      params.parent.sounds.playChildFound();
+      this.canMove = false;
+
+      this.scene.launch("HeartScene", { x: this.child.x, y: this.child.y, child: this.child });
       this.scene.bringToTop("HeartScene");
-      params.parent.scene.pause();
 
       this.time.addEvent({
-        delay: 2000,
+        delay: 3000,
         callback: () => {
+          this.scene.stop("HeartScene");
+          
           this.tweens.add({
             targets: [this.child],
             alpha: { value: 0, duration: 2000 },
             scale: { value: 0.5, duration: 2000 },
-            x: { value: 530, duration: 2000 },
-            y: { value: 528, duration: 2000 },
+            x: { value: 570, duration: 2000 },
+            y: { value: 526, duration: 2000 },
             yoyo: false,
             loop: 0,
             onComplete: () => {
-              this.scene.stop("HeartScene");
+              this.canMove = true;
+              
               this.scene.manager.getScene("MenuScene").addRed();
-              params.parent.scene.resume();
             },
           });
         },

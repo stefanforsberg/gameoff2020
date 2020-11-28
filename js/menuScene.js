@@ -6,8 +6,10 @@ import ImgPaintRed from "../img/paintRed.png";
 import ImgPaintGreen from "../img/paintGreen.png";
 import ImgPaintOrange from "../img/paintOrange.png";
 import ImgPaintPurple from "../img/paintPurple.png";
+import ImgPaintBrown from "../img/paintBrown.png";
 import ImgWood from "../img/s05_wood.png";
 import ImgAxe from "../img/s07_axe.png";
+import ImgFeather from "../img/s08_feather.png";
 
 export default class MenuScene extends Phaser.Scene {
   constructor() {
@@ -24,54 +26,66 @@ export default class MenuScene extends Phaser.Scene {
     this.load.image("paintGreen", ImgPaintGreen);
     this.load.image("paintOrange", ImgPaintOrange);
     this.load.image("paintPurple", ImgPaintPurple);
+    this.load.image("paintBrown", ImgPaintBrown);
     this.load.image("wood", ImgWood);
     this.load.image("axe", ImgAxe);
+    this.load.image("feather", ImgFeather);
+
   }
 
   create() {
+
+    this.canMix = false;
+
     this.paintHolder = this.add.image(512, 535, "paintHolder");
     this.paintHolder.alpha = 0;
 
-    this.paintYellow = this.add.image(426, 528, "paintYellow");
+    this.paintYellow = this.add.image(500, 526, "paintYellow");
     this.paintYellow.setInteractive();
     
     this.paintYellow.on("pointerdown", () => {
-      if(this.input.manager.defaultCursor.indexOf("Blue") > -1) {
-        this.input.setDefaultCursor("url(" + ImgPaintGreen + ") 32 32, pointer");
-      } else if(this.input.manager.defaultCursor.indexOf("Red") > -1) {
-        this.input.setDefaultCursor("url(" + ImgPaintOrange + ") 32 32, pointer");
-      }else {
-        this.input.setDefaultCursor("url(" + ImgPaintYellow + ") 32 32, pointer");
+      if(this.input.manager.defaultCursor.indexOf("Blue") > -1 && this.canMix) {
+        this.input.setDefaultCursor("url(" + ImgPaintGreen + ") 21 20, pointer");
+      } else if(this.input.manager.defaultCursor.indexOf("Red") > -1 && this.canMix) {
+        this.input.setDefaultCursor("url(" + ImgPaintOrange + ") 21 20, pointer");
+      } else if(this.input.manager.defaultCursor.indexOf("Purple") > -1 && this.canMix) {
+        this.input.setDefaultCursor("url(" + ImgPaintBrown + ") 21 20, pointer");
+      } else {
+        this.input.setDefaultCursor("url(" + ImgPaintYellow + ") 21 20, pointer");
       }
       
     });
 
-    this.paintBlue = this.add.image(480, 526, "paintBlue");
-    this.paintBlue.alpha = 0;
+    this.paintBlue = this.add.image(430, 526, "paintBlue");
+    this.paintBlue.alpha = 1;
     this.paintBlue.setInteractive();
 
     this.paintBlue.on("pointerdown", () => {
-      if(this.input.manager.defaultCursor.indexOf("Yellow") > -1) {
-        this.input.setDefaultCursor("url(" + ImgPaintGreen + ") 32 32, pointer");
-      } else if(this.input.manager.defaultCursor.indexOf("Red") > -1) {
-        this.input.setDefaultCursor("url(" + ImgPaintPurple + ") 32 32, pointer");
+      if(this.input.manager.defaultCursor.indexOf("Yellow") > -1 && this.canMix) {
+        this.input.setDefaultCursor("url(" + ImgPaintGreen + ") 21 20, pointer");
+      } else if(this.input.manager.defaultCursor.indexOf("Red") > -1 && this.canMix) {
+        this.input.setDefaultCursor("url(" + ImgPaintPurple + ") 21 20, pointer");
+      } else if(this.input.manager.defaultCursor.indexOf("Orange") > -1 && this.canMix) {
+        this.input.setDefaultCursor("url(" + ImgPaintBrown + ") 21 20, pointer");
       } else {
-        this.input.setDefaultCursor("url(" + ImgPaintBlue + ") 32 32, pointer");
+        this.input.setDefaultCursor("url(" + ImgPaintBlue + ") 21 20, pointer");
       }
       
     });
 
-    this.paintRed = this.add.image(532, 525, "paintRed");
-    this.paintRed.alpha = 0;
+    this.paintRed = this.add.image(570, 525, "paintRed");
+    this.paintRed.alpha = 1;
     this.paintRed.setInteractive();
 
     this.paintRed.on("pointerdown", () => {
-      if(this.input.manager.defaultCursor.indexOf("Yellow") > -1) {
-        this.input.setDefaultCursor("url(" + ImgPaintOrange + ") 32 32, pointer");
-      } else if(this.input.manager.defaultCursor.indexOf("Blue") > -1) {
-        this.input.setDefaultCursor("url(" + ImgPaintPurple + ") 32 32, pointer");
+      if(this.input.manager.defaultCursor.indexOf("Yellow") > -1 && this.canMix) {
+        this.input.setDefaultCursor("url(" + ImgPaintOrange + ") 21 20, pointer");
+      } else if(this.input.manager.defaultCursor.indexOf("Blue") > -1 && this.canMix) {
+        this.input.setDefaultCursor("url(" + ImgPaintPurple + ") 21 20, pointer");
+      } else if(this.input.manager.defaultCursor.indexOf("Green") > -1 && this.canMix) {
+        this.input.setDefaultCursor("url(" + ImgPaintBrown + ") 21 20, pointer");
       } else {
-        this.input.setDefaultCursor("url(" + ImgPaintRed + ") 32 32, pointer");
+        this.input.setDefaultCursor("url(" + ImgPaintRed + ") 21 20, pointer");
       }
       
     });
@@ -81,6 +95,9 @@ export default class MenuScene extends Phaser.Scene {
 
     this.axe = this.add.image(810, 530, "axe");
     this.axe.alpha = 0;
+
+    this.feather = this.add.image(870, 530, "feather");
+    this.feather.alpha = 0;
 
     
   }
@@ -130,7 +147,18 @@ export default class MenuScene extends Phaser.Scene {
     });
   }
 
-  
+  addFeather() {
+    this.tweens.add({
+      targets: [this.feather],
+      alpha: { value: 1, duration: 1000 },
+      yoyo: false,
+      loop: 0,
+    });
+  }
+
+  canMixNow() {
+    this.canMix = true;
+  }
 
   update() {}
 }

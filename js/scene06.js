@@ -48,6 +48,7 @@ export default class Scene06 extends SceneBase {
     this.child = this.physics.add.image(465, 170, "child06");
 
     this.child.setInteractive();
+    interaction.setTalkCursor(this.child);
     this.child.on("pointerdown", () => {
       if(this.sunColor.alpha === 0) {
         this.canMove = false;
@@ -117,8 +118,8 @@ export default class Scene06 extends SceneBase {
                       targets: [this.child ],
                       alpha: { value: 0, duration: 2000 },
                       scale: { value: 0.5, duration: 2000 },
-                      x: {value: 476, duration: 2000},
-                      y: {value: 528, duration: 2000},
+                      x: {value: 430, duration: 2000},
+                      y: {value: 526, duration: 2000},
                       yoyo: false,
                       loop: 0,
                       onComplete: () => {
@@ -166,9 +167,9 @@ export default class Scene06 extends SceneBase {
       yoyo: false,
     });
 
-    interaction.exitLeft(this, params.luna, 107,357, params.exitLeft);
+    interaction.exitLeft(this, params.luna, 107,340, params.exitLeft);
 
-    interaction.exitRight(this, params.luna, 862, 361, params.exitRight)
+    interaction.exitRight(this, params.luna, 862, 340, params.exitRight)
 
     interaction.exitDown(this, params.luna, 474, 423, params.exitDown)
 

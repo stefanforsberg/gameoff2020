@@ -1,8 +1,13 @@
 import Phaser from "phaser";
 import game from "../js/index.js"
+import CursorTalk from "../img/cursorTalk.png";
 
 const textContainerElement = document.getElementById("text-container");
 const textElement = document.getElementById("text");
+
+const setTalkCursor = function(gameObject) {
+    gameObject.input.cursor = "url(" + CursorTalk.replace("/", "") + ") 20 17, pointer";
+}
 
 const polygon = function(scene, points, icon, click) {
     var polygon = new Phaser.Geom.Polygon(points);
@@ -37,7 +42,12 @@ const getPolygon = function(scene, points) {
     return graphics;
 }
 
-const click = function(scene, gameObject, cursor, remove, cb) {
+const click = function(scene, gameObject, cursor, remove, cb, talkIcon) {
+
+    if(talkIcon) {
+        setTalkCursor(gameObject)
+    }
+
     gameObject.on("pointerdown", () => {
 
         console.log("Clicking on o. " + scene.input.manager.defaultCursor)
@@ -95,9 +105,9 @@ const exit = function(scene, luna, x, y, imgName, cb) {
     return img;
 }
 
-const writeText = function(text, hide, cb) {
+const writeText = function(text, hide, cb, alwaysRun) {
     
-    if(textElement.style.display === 'flex') {
+    if(textElement.style.display === 'flex' && !alwaysRun) {
         return;
     }
 
@@ -131,4 +141,4 @@ const writeText = function(text, hide, cb) {
     updateContainer();
 }
 
-export default {polygon, getPolygon, exitRight, exitLeft, exitUp, exitDown, click, writeText} 
+export default {polygon, getPolygon, exitRight, exitLeft, exitUp, exitDown, click, writeText, setTalkCursor} 

@@ -13,9 +13,8 @@ export default class HeartScene extends Phaser.Scene {
   }
 
   create(params) {
-    console.log("lauching heart")
 
-    this.add.particles("heart").createEmitter({
+    this.emitter = this.add.particles("heart").createEmitter({
       scale: { start: 0, end: 0.9 },
       alpha: { start: 1, end: 0 },
       speed: 50,
@@ -25,7 +24,6 @@ export default class HeartScene extends Phaser.Scene {
       lifespan: 2000,
       frequency: 200,
     });
-
     
   }
 
