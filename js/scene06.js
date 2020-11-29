@@ -34,8 +34,6 @@ export default class Scene06 extends SceneBase {
   create(params) {
     this.setParams(params);
 
-    console.log("creating scene 06");
-
     this.iceMelt = this.sound.add("iceMelt", { loop: false, volume: 1 });
     this.iceBreak = this.sound.add("iceBreak", { loop: false, volume: 1 });
 

@@ -52,7 +52,6 @@ export default class MainScene extends Phaser.Scene {
     if (keyOld) {
       this.scene.pause(keyOld);
     }
-    console.log("resuming: " + keyNew)
     this.scene.resume(keyNew);
     this.scene.bringToTop(keyNew);
     this.scene.bringToTop("MainScene");
@@ -60,15 +59,6 @@ export default class MainScene extends Phaser.Scene {
   }
 
   create() {
-
-    
-    this.input.on(
-      "pointerdown",
-      function (pointer) {
-          console.log(pointer.worldX + "," + pointer.worldY);
-      },
-      this
-    );
 
     this.sounds = {
       scribble: this.sound.add("scribble", { loop: false, volume: 0.5 }),
@@ -137,7 +127,7 @@ export default class MainScene extends Phaser.Scene {
         this.sceneOrder("Scene05", "Scene02");
       },
       exitRight: () => {
-        this.luna.setPos(258, 229);
+        this.luna.setPos(243, 342);
 
         this.sceneOrder("Scene09", "Scene02");
       },
@@ -240,7 +230,7 @@ export default class MainScene extends Phaser.Scene {
       luna: this.luna,
       exitLeft: () => {
         this.luna.setPos(734, 376);
-        this.sceneOrder("Scene06", "Scene06");
+        this.sceneOrder("Scene06", "Scene10");
       },
       exitRight: () => {
         this.luna.setPos(176, 322);
@@ -251,8 +241,7 @@ export default class MainScene extends Phaser.Scene {
     setTimeout(() => {
       this.sceneOrder("Scene01");
     },1000)
-
-    
+        
   }
 
   update() {

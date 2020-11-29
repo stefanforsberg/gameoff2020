@@ -50,8 +50,6 @@ const click = function(scene, gameObject, cursor, remove, cb, talkIcon) {
 
     gameObject.on("pointerdown", () => {
 
-        console.log("Clicking on o. " + scene.input.manager.defaultCursor)
-
         if(scene.input.manager.defaultCursor.indexOf(cursor) > -1) {
 
             if(remove) {
@@ -72,8 +70,6 @@ const exitUp = function(scene, luna, x, y, cb, yOffset) {
     if(!yOffset) {
         yOffset = -80
     }
-
-    console.log("offset: " + yOffset)
 
     const i = exit(scene, luna, x, y, "navigateUp", cb);
     i.body.setOffset(-20, yOffset);

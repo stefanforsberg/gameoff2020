@@ -18,8 +18,6 @@ export default class Scene03 extends SceneBase {
   create(params) {
     super.setParams(params);
 
-    console.log("creating scene 03")
-
     this.luna = params.luna;
 
     this.add.image(512,300, "scene03")

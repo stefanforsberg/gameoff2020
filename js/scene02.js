@@ -19,8 +19,6 @@ export default class Scene02 extends SceneBase {
 
   create(params) {
 
-    console.log("creating scene 02")
-
     super.setParams(params);
 
     this.luna = params.luna;

@@ -13,6 +13,7 @@ import Scene08 from "../js/scene08.js"
 import Scene09 from "../js/scene09.js"
 import Scene10 from "../js/scene10.js"
 import SceneIntro from "../js/sceneIntro.js"
+import SceneOutro from "../js/sceneOutro.js"
 
 
 const config = {
@@ -24,7 +25,7 @@ const config = {
         height: 600
     },
     parent: "game",
-    scene: [MainScene, Scene02, Scene03, Scene04, Scene05, Scene06, Scene07, Scene08, Scene09, Scene10, Scene01, MenuScene, HeartScene, SceneIntro],
+    scene: [MainScene, SceneOutro, Scene02, Scene03, Scene04, Scene05, Scene06, Scene07, Scene08, Scene09, Scene10, Scene01, MenuScene, HeartScene, SceneIntro],
     physics: {
         default: "arcade",
         arcade: {

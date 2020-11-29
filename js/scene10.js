@@ -4,6 +4,8 @@ import ImgFountainYellow from "../img/s10_fountainYellow.png";
 import ImgFountainRed from "../img/s10_fountainRed.png";
 import ImgFountainRedColor from "../img/s10_fountainRedColor.png";
 
+import AudioFountain from "../audio/river.mp3"
+
 import ImgShot from "../img/intro_shot.png";
 import ImgShotRed from "../img/shotRed.png";
 import ImgShotOrange from "../img/shotOrange.png";
@@ -25,15 +27,17 @@ export default class Scene10 extends SceneBase {
     this.load.image("fountainYellow", ImgFountainYellow);
     this.load.image("fountainRed", ImgFountainRed);
     this.load.image("fountainRedColor", ImgFountainRedColor);
+
+    this.load.audio("fountain", AudioFountain);
   }
 
   create(params) {
     this.setParams(params);
-    console.log("creating scene 10");
 
     this.add.image(512, 300, "scene10");
 
-    // 310,252
+    this.fountainSound = this.sound.add("fountain", { loop: true, volume: 0.7 });
+    this.fountainSound.play();
 
     this.setupYellowFontain();
     this.setupRedFontain();
@@ -42,6 +46,20 @@ export default class Scene10 extends SceneBase {
     interaction.exitRight(this, params.luna, 978, 460, params.exitRight);
 
     super.setWalkable([38, 420, 1140, 420, 1140, 510, 38, 510]);
+
+    this.scene.scene.events.on('pause', () => 
+    {
+      if(this.fountainSound.isPlaying) {
+        this.fountainSound.pause();
+      }
+    });
+
+    this.scene.scene.events.on('resume', () => 
+    {
+      if(this.fountainSound.isPaused) {
+        this.fountainSound.resume();
+      }
+    });
 
     this.scene.pause();
   }

@@ -32,11 +32,7 @@ export default class Scene08 extends SceneBase {
 
   create(params) {
     this.setParams(params);
-    console.log("creating scene 08");
-
     this.add.image(512, 300, "scene08");
-
-
     
     this.flowerColor = this.add.image(367, 266, "flowerColor");
     this.flowerColor.alpha = 0.01;
@@ -45,9 +41,21 @@ export default class Scene08 extends SceneBase {
         this.flowerColor.alpha = 1;
         this.params.parent.sounds.scribble.play();
         this.canMove = false;
-        interaction.writeText("Flamingo: Thank you stranger, I'm off to join my family down south.", true, () => {this.canMove = true});
-        this.setupFeather();
-        this.flamingo.destroy();
+
+        params.parent.sounds.playChildFound();
+
+        this.time.addEvent({
+          delay: 2000,
+          callback: () => {
+            interaction.writeText("Flamingo: Thank you stranger, I'm off to join my family down south.", true, () => {this.canMove = true});
+            this.setupFeather();
+            this.flamingo.destroy();
+          },
+          callbackScope: this,
+          loop: false,
+        });
+
+
 
     });
 

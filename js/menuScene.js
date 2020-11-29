@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import game from "../js/index.js"
 import ImgPaintHolder from "../img/paintHolder.png";
 import ImgPaintYellow from "../img/paintYellow.png";
 import ImgPaintBlue from "../img/paintBlue.png";
@@ -10,6 +11,8 @@ import ImgPaintBrown from "../img/paintBrown.png";
 import ImgWood from "../img/s05_wood.png";
 import ImgAxe from "../img/s07_axe.png";
 import ImgFeather from "../img/s08_feather.png";
+import AudioHammerNails from "../audio/hammerNails.mp3"
+
 
 export default class MenuScene extends Phaser.Scene {
   constructor() {
@@ -30,12 +33,15 @@ export default class MenuScene extends Phaser.Scene {
     this.load.image("wood", ImgWood);
     this.load.image("axe", ImgAxe);
     this.load.image("feather", ImgFeather);
+    this.load.audio("hammerNails", AudioHammerNails);
 
   }
 
   create() {
 
-    this.canMix = false;
+    this.canMix = game.config.physics.arcade.debug ? true : false;
+
+    this.hammerNails = this.sound.add("hammerNails", { loop: false, volume: 1 });
 
     this.paintHolder = this.add.image(512, 535, "paintHolder");
     this.paintHolder.alpha = 0;
@@ -57,7 +63,7 @@ export default class MenuScene extends Phaser.Scene {
     });
 
     this.paintBlue = this.add.image(430, 526, "paintBlue");
-    this.paintBlue.alpha = 1;
+    this.paintBlue.alpha = game.config.physics.arcade.debug ? 1 : 0;
     this.paintBlue.setInteractive();
 
     this.paintBlue.on("pointerdown", () => {
@@ -74,7 +80,7 @@ export default class MenuScene extends Phaser.Scene {
     });
 
     this.paintRed = this.add.image(570, 525, "paintRed");
-    this.paintRed.alpha = 1;
+    this.paintRed.alpha = game.config.physics.arcade.debug ? 1 : 0;
     this.paintRed.setInteractive();
 
     this.paintRed.on("pointerdown", () => {
@@ -91,15 +97,83 @@ export default class MenuScene extends Phaser.Scene {
     });
 
     this.wood = this.add.image(750, 530, "wood");
-    this.wood.alpha = 0;
+    this.wood.alpha = game.config.physics.arcade.debug ? 1 : 0;
 
     this.axe = this.add.image(810, 530, "axe");
-    this.axe.alpha = 0;
+    this.axe.alpha = game.config.physics.arcade.debug ? 1 : 0;
 
     this.feather = this.add.image(870, 530, "feather");
-    this.feather.alpha = 0;
+    this.feather.alpha = game.config.physics.arcade.debug ? 1 : 0;
 
     
+  }
+
+  readyForEndgame() {
+    if(this.axe.alpha === 0 || this.wood.alpha === 0 || this.feather.alpha === 0 ||  this.paintBlue.alpha === 0 || this.paintRed.alpha === 0)
+    {
+      return false;
+    }
+
+    this.tweens.add({
+      targets: [this.axe, this.wood],
+      x: 390,
+      y: 257,
+      alpha: 0,
+      yoyo: false,
+      loop: 0,
+      duration: 1000,
+      onComplete: () => {
+        this.hammerNails.play();
+      }
+    })
+
+    this.tweens.add({
+      delay: 2000,
+      targets: [this.paintYellow],
+      x: 393,
+      y: 140,
+      scale: 0.5,
+      alpha: 0.5,
+      yoyo: false,
+      loop: 0,
+      duration: 1000
+    });
+
+    this.tweens.add({
+      delay: 4000,
+      targets: [this.paintBlue],
+      x: 387,
+      y: 147,
+      scale: 0.5,
+      alpha: 0.5,
+      yoyo: false,
+      loop: 0,
+      duration: 1000
+    });
+
+    this.tweens.add({
+      delay: 6000,
+      targets: [this.paintRed],
+      x: 399,
+      y: 147,
+      scale: 0.5,
+      alpha: 0.5,
+      yoyo: false,
+      loop: 0,
+      duration: 1000
+    });
+
+    this.tweens.add({
+      delay: 8000,
+      targets: [this.feather],
+      x: 483,
+      y: 146,
+      yoyo: false,
+      loop: 0,
+      duration: 1000
+    });
+
+    return true;
   }
 
   showMenu() {

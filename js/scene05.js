@@ -44,7 +44,6 @@ export default class Scene05 extends SceneBase {
 
   create(params) {
     this.setParams(params);
-    console.log("creating scene 05");
 
     this.beach = this.sound.add("beach", { loop: true, volume: 1 });
     this.rain = this.sound.add("rain", { loop: true, volume: 0 });
@@ -148,8 +147,6 @@ export default class Scene05 extends SceneBase {
         this.treeColors.push("O");
       }
 
-      console.log(this.treeColors);
-
       if ((this.treeColors.indexOf("Y") > -1 && this.treeColors.indexOf("R") > -1) || this.treeColors.indexOf("O") > -1) {
         this.tree.destroy();
         this.treeColor.alpha = 1;
@@ -187,6 +184,8 @@ export default class Scene05 extends SceneBase {
 
         
         this.canMove = false;
+
+        this.params.parent.sounds.playChildFound();
 
         this.time.addEvent({
           delay: 2000,

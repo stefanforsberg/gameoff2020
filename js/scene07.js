@@ -32,7 +32,6 @@ export default class Scene07 extends SceneBase {
 
   create(params) {
     super.setParams(params);
-    console.log("creating scene 07");
 
     this.hack = this.sound.add("hack", { loop: false, volume: 0.1 });
 
@@ -84,18 +83,30 @@ export default class Scene07 extends SceneBase {
     this.gemsColor.alpha = 0;
 
     interaction.click(this, this.gems, "Green", true, () => {
-      console.log("yese");
       this.params.parent.sounds.scribble.play();
 
       this.gemsColor.alpha = 1;
 
       this.canMove = false;
-      this.setupAxe();
-      this.hacker.destroy();
-      interaction.writeText("Miner: Ah thank you mysterious friend, I can finally return home to my family!", true, () => {
-        this.canMove = true;
-        super.setWalkable([168,315, 346,264, 441,324, 558,310, 591,387, 148,405]);
+
+      this.params.parent.sounds.playChildFound();
+
+      this.time.addEvent({
+        delay: 2000,
+        callback: () => {
+          this.setupAxe();
+          this.hacker.destroy();
+          interaction.writeText("Miner: Ah thank you mysterious friend, I can finally return home to my family!", true, () => {
+            this.canMove = true;
+            super.setWalkable([168,315, 346,264, 441,324, 558,310, 591,387, 148,405]);
+          });
+        },
+        callbackScope: this,
+        loop: false,
       });
+
+
+      
     });
   }
 

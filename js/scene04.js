@@ -28,8 +28,6 @@ export default class Scene04 extends SceneBase {
   }
 
   create(params) {
-    console.log("creating scene 04");
-
     super.setParams(params);
 
     this.riverSound = this.sound.add("river", { loop: true, volume: 0.4 });

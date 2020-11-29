@@ -5,21 +5,13 @@ export default class Luna {
 
     this.sprite = scene.physics.add.sprite(201, 365, "lunasheet", 0).setSize(202, 300).setOffset(0, 0);
 
-    console.log(this.sprite.displayHeight )
-
     this.baseMaxScale = 0.5;
     this.sprite.scale = this.baseMaxScale;
-
-    
     this.container = this.scene.add.container(0, 0)
 
     this.sprite.setOrigin(0.5,1)
 
-    console.log(this.sprite.displayHeight )
-
     this.targetPos = { x: 200, y: 200 };
-
-    console.log(scene.anims);
 
     this.container.add([this.sprite])
 
@@ -31,11 +23,6 @@ export default class Luna {
       frameRate: 4,
       repeat: -1,
     });
-
-    
-    // this.spritestandup.anims.play("luna-stand-up");
-
-    // this.sprite.setTexture("lunasheet", 4);
   }
 
   setPos(x, y) {
@@ -57,8 +44,6 @@ export default class Luna {
 
     this.targetPos.x = tx;
     this.targetPos.y = ty;
-
-    console.log(tx, ty)
 
     this.sprite.anims.play("luna-walk");
     this.scene.physics.moveTo(this.sprite, tx, ty, 200);
