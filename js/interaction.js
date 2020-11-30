@@ -111,30 +111,31 @@ const writeText = function(text, hide, cb, alwaysRun) {
     let i = 0;
 
     textElement.style.display = 'flex';
-    textContainerElement.innerHTML = ""
+    textContainerElement.innerHTML = text
 
-    function updateContainer() {
-        if (i < text.length) {
-            textContainerElement.innerHTML += text.charAt(i).toString().replace("}", "<br />");
-            i++;
-            setTimeout(updateContainer, textSpeed);
-          } else {
+    let timeout = 0;
 
-            setTimeout(() => {
-                if(hide) {
-                    textElement.style.display = 'none';
-                }
-    
-                if(cb) {
-                    cb();
-                }
-            }, 3000);
-            
-            
-          }
-    }
+    textElement.addEventListener("click", () => {
+        clearTimeout(timeout);
+        
+        if(hide) {
+            textElement.style.display = 'none';
+        }
 
-    updateContainer();
+        if(cb) {
+            cb();
+        }
+    })
+
+    timeout = setTimeout(() => {
+        if(hide) {
+            textElement.style.display = 'none';
+        }
+
+        if(cb) {
+            cb();
+        }
+    }, 6000);
 }
 
 export default {polygon, getPolygon, exitRight, exitLeft, exitUp, exitDown, click, writeText, setTalkCursor} 
