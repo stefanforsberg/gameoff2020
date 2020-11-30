@@ -2,8 +2,8 @@ import Phaser from "phaser";
 import game from "../js/index.js"
 import CursorTalk from "../img/cursorTalk.png";
 
-const textContainerElement = document.getElementById("text-container");
-const textElement = document.getElementById("text");
+
+
 
 const setTalkCursor = function(gameObject) {
     gameObject.input.cursor = "url(" + CursorTalk.replace("/", "") + ") 20 17, pointer";
@@ -102,13 +102,19 @@ const exit = function(scene, luna, x, y, imgName, cb) {
 }
 
 const writeText = function(text, hide, cb, alwaysRun) {
+
+    let textElement = document.getElementById("text");
     
+    const clonedElement = textElement.cloneNode(true);
+    textElement.replaceWith(clonedElement);
+
+    textElement = document.getElementById("text");
+
     if(textElement.style.display === 'flex' && !alwaysRun) {
         return;
     }
 
-    const textSpeed = 30;
-    let i = 0;
+    const textContainerElement = document.getElementById("text-container");
 
     textElement.style.display = 'flex';
     textContainerElement.innerHTML = text
@@ -135,7 +141,7 @@ const writeText = function(text, hide, cb, alwaysRun) {
         if(cb) {
             cb();
         }
-    }, 6000);
+    }, 10000);
 }
 
 export default {polygon, getPolygon, exitRight, exitLeft, exitUp, exitDown, click, writeText, setTalkCursor} 

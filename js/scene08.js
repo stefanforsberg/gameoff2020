@@ -47,7 +47,7 @@ export default class Scene08 extends SceneBase {
         this.time.addEvent({
           delay: 2000,
           callback: () => {
-            interaction.writeText("Flamingo: Thank you stranger, I'm off to join my family down south.", true, () => {this.canMove = true});
+            interaction.writeText('Flamingo: "Thank you stranger, I\'m off to join my family down south."', true, () => {this.canMove = true});
             this.setupFeather();
             this.flamingo.destroy();
           },
@@ -65,7 +65,7 @@ export default class Scene08 extends SceneBase {
     interaction.setTalkCursor(this.flamingo);
     this.flamingo.on("pointerdown", () => {
       this.canMove = false;
-      interaction.writeText("Flamingo: I really want to see my favorite Lavender flower before leaving south.", true, () => {this.canMove = true});
+      interaction.writeText('Flamingo: "I really want to see my favorite Lavender flower before leaving south."', true, () => {this.canMove = true});
       
     })
 

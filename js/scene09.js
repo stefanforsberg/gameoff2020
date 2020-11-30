@@ -40,7 +40,7 @@ export default class Scene09 extends SceneBase {
         this.walkable.destroy();
         this.endScene();
       } else {
-        interaction.writeText("Mysterious voice: If you can find some wood, a bird feather and a mining axe we can use this lighthouse to restore your home.", true, () => {
+        interaction.writeText('Mysterious voice: "If you can find some wood, a bird feather and a mining axe we can use this lighthouse to restore your home."', true, () => {
           this.canMove = true;
         })
       }

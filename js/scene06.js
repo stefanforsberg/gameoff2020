@@ -50,7 +50,7 @@ export default class Scene06 extends SceneBase {
     this.child.on("pointerdown", () => {
       if(this.sunColor.alpha === 0) {
         this.canMove = false;
-        interaction.writeText("Luna: Oh no, my poor child appears to be frozen solid. Maybe I can find a way to melt the ice...?", true, () => {this.canMove = true});
+        interaction.writeText('Luna: "Oh no, my poor child appears to be frozen solid. Maybe I can find a way to melt the ice...?"', true, () => {this.canMove = true});
       } else {
         if (this.input.manager.defaultCursor === "" && this.canMove) {
           params.luna.setTarget(461, 235);
@@ -108,7 +108,7 @@ export default class Scene06 extends SceneBase {
                   callback: () => {
                     this.scene.stop("HeartScene")
           
-                    this.canMove = true;
+                    
 
                     this.tweens.add({
                       targets: [this.child ],
@@ -119,7 +119,7 @@ export default class Scene06 extends SceneBase {
                       yoyo: false,
                       loop: 0,
                       onComplete: () => {
-                        
+                        this.canMove = true;    
                         this.scene.manager.getScene("MenuScene").addBlue();
                       }
                     });

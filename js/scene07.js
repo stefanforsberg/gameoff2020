@@ -63,7 +63,7 @@ export default class Scene07 extends SceneBase {
     interaction.setTalkCursor(this.hacker);
     this.hacker.on("pointerdown", () => {
       this.canMove = false;
-      interaction.writeText("Miner: I just need some jade gems and I can return home.", true, () => {
+      interaction.writeText('Miner: "I just need some jade gems and I can return home."', true, () => {
         this.canMove = true;
       });
     });
@@ -96,7 +96,7 @@ export default class Scene07 extends SceneBase {
         callback: () => {
           this.setupAxe();
           this.hacker.destroy();
-          interaction.writeText("Miner: Ah thank you mysterious friend, I can finally return home to my family!", true, () => {
+          interaction.writeText('Miner: "Ah thank you mysterious friend, I can finally return home to my family!"', true, () => {
             this.canMove = true;
             super.setWalkable([168,315, 346,264, 441,324, 558,310, 591,387, 148,405]);
           });

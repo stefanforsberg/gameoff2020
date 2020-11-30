@@ -79,7 +79,7 @@ export default class SceneIntro extends Phaser.Scene {
       this.introTheme.play();
 
       this.time.addEvent({
-        delay: 47000,
+        delay: 36000,
         callback: () => {
           this.end();
         },

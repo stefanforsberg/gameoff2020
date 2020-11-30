@@ -62,7 +62,7 @@ export default class Scene05 extends SceneBase {
         this.luna.setPos(271, 307);
 
         this.canMove = false;
-        interaction.writeText("Lazy sunbather: This is my wood, keep away!", true, () => {this.canMove = true;});
+        interaction.writeText('Lazy sunbather: "This is my wood, keep away!"', true, () => {this.canMove = true;});
       } else {
         this.overlapWood.destroy();
         this.tweens.add({
@@ -202,7 +202,7 @@ export default class Scene05 extends SceneBase {
             });
     
             
-            interaction.writeText("Lazy sunbather: GAHHH, cold! Must! Run! Home!", true, () => {
+            interaction.writeText('Lazy sunbather: "GAHHH, cold! Must! Run! Home!"', true, () => {
               this.canMove = true;
             });
           }
@@ -239,7 +239,7 @@ export default class Scene05 extends SceneBase {
     this.sprite.on(
       "pointerdown",
       function () {
-        interaction.writeText("Lazy sunbather: Ah, this is so nice. I'm going to sit here until fall...", true, () => {});
+        interaction.writeText('Lazy sunbather: "Ah, this is so nice. I\'m going to sit here until fall..."', true, () => {});
       },
       this
     );

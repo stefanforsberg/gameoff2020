@@ -126,7 +126,7 @@ export default class Scene10 extends SceneBase {
             lifespan: 1500,
           });
 
-          interaction.writeText("Mysterious voice: Ahh, interesting! You can now combine the colors to make new colors. Click a color in your color palette with another color selected to mix.", true, () => {
+          interaction.writeText('Mysterious voice: "Ahh, interesting! You can now combine the colors to make new colors. Click a color in your color palette with another color selected to mix."', true, () => {
             this.scene.manager.getScene("MenuScene").canMixNow();
             this.canMove = true;
           });

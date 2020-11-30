@@ -39,7 +39,7 @@ export default class MenuScene extends Phaser.Scene {
 
   create() {
 
-    this.canMix = game.config.physics.arcade.debug ? true : false;
+    this.canMix = game.config.physics.arcade.debug ? true : true;
 
     this.hammerNails = this.sound.add("hammerNails", { loop: false, volume: 1 });
 
@@ -47,6 +47,7 @@ export default class MenuScene extends Phaser.Scene {
     this.paintHolder.alpha = 0;
 
     this.paintYellow = this.add.image(500, 526, "paintYellow");
+    this.paintYellow.alpha = 0;
     this.paintYellow.setInteractive();
     
     this.paintYellow.on("pointerdown", () => {
@@ -177,6 +178,7 @@ export default class MenuScene extends Phaser.Scene {
   }
 
   showMenu() {
+    this.paintYellow.alpha = 1;
     this.tweens.add({
       targets: [this.paintHolder],
       alpha: { value: 1, duration: 1000 },

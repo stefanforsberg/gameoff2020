@@ -56,7 +56,7 @@ export default class Scene04 extends SceneBase {
     this.child.setInteractive();
 
     this.waves.anims.play("waves");
-    this.waves.alpha = 0.1
+    this.waves.alpha = 0.5
 
     this.river = interaction.getPolygon(this, [520,181, 843,186, 672,479, 351,476]);
 
@@ -64,7 +64,7 @@ export default class Scene04 extends SceneBase {
     this.child.on("pointerdown", () => {
       if(this.sceneColor.alpha === 0) {
         this.canMove = false;
-        interaction.writeText("Luna: Hmm, my child is stuck with a raft on the other side...", true, () => {this.canMove = true});
+        interaction.writeText('Luna: "Hmm, my child is stuck with a raft on the other side..."', true, () => {this.canMove = true});
       }
     })
 
