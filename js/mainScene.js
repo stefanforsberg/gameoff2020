@@ -94,6 +94,11 @@ export default class MainScene extends Phaser.Scene {
   }
 
   start() {
+
+    document.getElementById("loading").style.backgroundColor = "#0D0909";
+    document.getElementById("loading").style.color = "white";
+    document.getElementById("loading").style.display = 'flex';
+
     this.sounds.mainTheme.play();
     this.tweens.add({
       targets: [this.sounds.mainTheme],
@@ -238,10 +243,17 @@ export default class MainScene extends Phaser.Scene {
       },
     });
 
-    setTimeout(() => {
+    this.runFirstScene();
+  }
+
+  runFirstScene() {
+
+    if(!this.scene.manager.isPaused("Scene01")) {
+      setTimeout(() => this.runFirstScene(), 1000);
+    } else {
+      document.getElementById("loading").style.display = 'none';
       this.sceneOrder("Scene01");
-    }, 1000)
-        
+    }
   }
 
   update() {

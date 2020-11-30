@@ -62,6 +62,8 @@ export default class SceneIntro extends Phaser.Scene {
 
     const title = this.add.image(512, 300, "title");
 
+    document.getElementById("loading").style.display = 'none';
+
     this.intro01 = this.add.image(512, 300, "intro01");
     this.intro01.alpha = 0;
 
