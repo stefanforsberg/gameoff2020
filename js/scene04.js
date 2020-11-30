@@ -32,8 +32,6 @@ export default class Scene04 extends SceneBase {
 
     this.riverSound = this.sound.add("river", { loop: true, volume: 0.4 });
 
-    
-
     this.input.topOnly = false;
 
     this.luna = params.luna;
@@ -52,13 +50,23 @@ export default class Scene04 extends SceneBase {
       repeat: -1,
       yoyo: false,
     });
-    
-    
 
-    this.child = this.physics.add.image(777, 197, "scene04Child");
-    this.child.scale = 0.6;
+    this.child = this.physics.add.image(777, 297, "scene04Child");
+    this.child.scale = 0.9;
+    this.child.setInteractive();
+
+    this.waves.anims.play("waves");
+    this.waves.alpha = 0.1
 
     this.river = interaction.getPolygon(this, [520,181, 843,186, 672,479, 351,476]);
+
+    interaction.setTalkCursor(this.child);
+    this.child.on("pointerdown", () => {
+      if(this.sceneColor.alpha === 0) {
+        this.canMove = false;
+        interaction.writeText("Luna: Hmm, my child is stuck with a raft on the other side...", true, () => {this.canMove = true});
+      }
+    })
 
     this.setupRiverClick(params);
 
@@ -92,10 +100,11 @@ export default class Scene04 extends SceneBase {
   setupRiverClick(params) {
     interaction.click(this, this.river, "Blue", true, () => {
 
+      this.child.removeInteractive();
+
       this.sceneColor.alpha = 1;
       params.parent.sounds.scribble.play();
 
-      this.waves.anims.play("waves");
       this.waves.alpha = 0.6
       
       this.riverSound.play();

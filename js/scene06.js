@@ -56,8 +56,6 @@ export default class Scene06 extends SceneBase {
           params.luna.setTarget(461, 235);
         }
       }
-      
-      
     })
 
     this.sprite = this.add.sprite(465,200, "ice", 0);

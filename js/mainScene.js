@@ -240,7 +240,7 @@ export default class MainScene extends Phaser.Scene {
 
     setTimeout(() => {
       this.sceneOrder("Scene01");
-    },1000)
+    }, 1000)
         
   }
 
