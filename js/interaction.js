@@ -104,15 +104,15 @@ const exit = function(scene, luna, x, y, imgName, cb) {
 const writeText = function(text, hide, cb, alwaysRun) {
 
     let textElement = document.getElementById("text");
+
+    if(textElement.style.display === 'flex' && !alwaysRun) {
+        return;
+    }
     
     const clonedElement = textElement.cloneNode(true);
     textElement.replaceWith(clonedElement);
 
     textElement = document.getElementById("text");
-
-    if(textElement.style.display === 'flex' && !alwaysRun) {
-        return;
-    }
 
     const textContainerElement = document.getElementById("text-container");
 

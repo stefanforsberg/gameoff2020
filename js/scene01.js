@@ -49,7 +49,6 @@ export default class Scene01 extends SceneBase {
     });
 
     this.scene.pause();
-    console.log("paused s01")
   }
 
   start() {
